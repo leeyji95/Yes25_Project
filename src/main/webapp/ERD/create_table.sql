@@ -90,7 +90,6 @@ CREATE TABLE tb_emp
     emp_admin            NUMBER           NOT NULL, 
     CONSTRAINT TB_EMP_PK PRIMARY KEY (emp_uid)
 );
-SELECT * FROM tb_emp ;
 
 ALTER TABLE tb_emp
     ADD CONSTRAINT FK_tb_emp_position_uid_tb_posi FOREIGN KEY (position_uid)
@@ -113,46 +112,43 @@ CREATE TABLE tb_commute
     commute_uid         NUMBER          NOT NULL, 
     commute_state       VARCHAR2(10)    NOT NULL, 
     commute_date        DATE            DEFAULT SYSDATE NOT NULL, 
-    emp_number          NUMBER          NOT NULL, 
-    commute_start       TIMESTAMP       NOT NULL, 
-    commute_total       NUMBER          NOT NULL, 
+    emp_uid             NUMBER          NOT NULL, 
+    commute_start       TIMESTAMP       NULL, 
+    commute_total       NUMBER          NULL, 
     commute_end         TIMESTAMP       NULL, 
-    commute_apply       NUMBER          DEFAULT 0 NULL, 
-    commute_overtime    NUMBER          NULL   
+    commute_overtime    NUMBER          NULL, 
+    CONSTRAINT TB_COMMUTE_PK PRIMARY KEY (commute_uid)
 );
 
 ALTER TABLE tb_commute
-    ADD CONSTRAINT FK_tb_commute_emp_number_tb_em FOREIGN KEY (emp_number)
-        REFERENCES tb_emp (emp_number);
-
-ALTER TABLE tb_commute
-    ADD CONSTRAINT UC_commute_uid UNIQUE (commute_uid);
+    ADD CONSTRAINT FK_tb_commute_emp_uid_tb_emp_e FOREIGN KEY (emp_uid)
+        REFERENCES tb_emp (emp_uid);
 
    
 CREATE TABLE tb_apply
 (
-    apply_type           NUMBER          NOT NULL, 
-    emp_uid              NUMBER          NOT NULL, 
-    emp_name             VARCHAR2(20)    NOT NULL, 
-    apply_workdate       DATE            NULL, 
-    apply_holidaydate    DATE            NULL, 
-    apply_extra          NUMBER          NULL, 
-    emp_number           NUMBER          NOT NULL
+    apply_uid            NUMBER    NOT NULL, 
+    apply_type           NUMBER    NOT NULL, 
+    emp_uid              NUMBER    NOT NULL, 
+    apply_workdate       DATE      NOT NULL, 
+    apply_holidaydate    DATE      NULL, 
+    apply_extra          NUMBER    NULL, 
+    is_apply             NUMBER    NULL, 
+    CONSTRAINT TB_APPLY_PK PRIMARY KEY (apply_uid)
 );
 
-ALTER TABLE tb_apply
-    ADD CONSTRAINT FK_tb_apply_emp_uid_tb_emp_emp FOREIGN KEY (emp_uid, emp_name, emp_number)
-        REFERENCES tb_emp (emp_uid, emp_name, emp_number);
 
 ALTER TABLE tb_apply
-    ADD CONSTRAINT FK_tb_apply_apply_workdate_tb_ FOREIGN KEY (apply_workdate)
-        REFERENCES tb_commute (commute_date);
-
-ALTER TABLE tb_apply
-    ADD CONSTRAINT UC_apply_type UNIQUE (apply_type);
-
-ALTER TABLE tb_apply
-    ADD CONSTRAINT UC_emp_number UNIQUE (emp_number);
+    ADD CONSTRAINT FK_tb_apply_emp_uid_tb_emp_emp FOREIGN KEY (emp_uid)
+        REFERENCES tb_emp (emp_uid);
+       
+-- 계정과목 테이블      
+CREATE TABLE tb_account
+(
+    account_uid     NUMBER           NOT NULL, 
+    account_name    VARCHAR2(100)    NOT NULL, 
+    CONSTRAINT TB_ACCOUNT_PK PRIMARY KEY (account_uid)
+);
    
    
 -- 전표테이블 생성   
@@ -181,13 +177,7 @@ ALTER TABLE tb_statement
     ADD CONSTRAINT FK_tb_statement_stmt_approver_ FOREIGN KEY (stmt_approver)
         REFERENCES tb_emp (emp_uid);
 
--- 계정과목 테이블      
-CREATE TABLE tb_account
-(
-    account_uid     NUMBER           NOT NULL, 
-    account_name    VARCHAR2(100)    NOT NULL, 
-    CONSTRAINT TB_ACCOUNT_PK PRIMARY KEY (account_uid)
-);
+
 
        
 CREATE TABLE tb_evidence_file
@@ -203,7 +193,33 @@ CREATE TABLE tb_evidence_file
 ALTER TABLE tb_evidence_file
     ADD CONSTRAINT FK_tb_evidence_file_stmt_uid_t FOREIGN KEY (stmt_uid)
         REFERENCES tb_statement (stmt_uid);
+ 
+CREATE TABLE tb_category
+(
+    category_uid       NUMBER          NOT NULL, 
+    category_name      VARCHAR2(30)    NULL, 
+    category_parent    NUMBER          NULL, 
+    CONSTRAINT TB_CATEGORY_PK PRIMARY KEY (category_uid)
+);
+
+ALTER TABLE tb_category
+    ADD CONSTRAINT FK_tb_category_category_parent FOREIGN KEY (category_parent)
+        REFERENCES tb_category (category_uid);
+
        
+CREATE TABLE tb_publisher
+(
+    publisher_uid        NUMBER           NOT NULL, 
+    publisher_name       VARCHAR2(100)    NOT NULL, 
+    publisher_num        VARCHAR2(12)     NOT NULL, 
+    publisher_rep        VARCHAR2(30)     NOT NULL, 
+    publisher_contact    VARCHAR2(60)     NOT NULL, 
+    publisher_address    VARCHAR2(200)    NOT NULL, 
+    CONSTRAINT TB_PUBLISHER_PK PRIMARY KEY (publisher_uid)
+);
+
+ALTER TABLE tb_publisher
+    ADD CONSTRAINT UC_publisher_num UNIQUE (publisher_num);
 
        
 CREATE TABLE tb_book
@@ -248,32 +264,7 @@ ALTER TABLE tb_attach
        
 
 
-CREATE TABLE tb_category
-(
-    category_uid       NUMBER          NOT NULL, 
-    category_name      VARCHAR2(30)    NULL, 
-    category_parent    NUMBER          NULL, 
-    CONSTRAINT TB_CATEGORY_PK PRIMARY KEY (category_uid)
-);
 
-ALTER TABLE tb_category
-    ADD CONSTRAINT FK_tb_category_category_parent FOREIGN KEY (category_parent)
-        REFERENCES tb_category (category_uid);
-
-       
-CREATE TABLE tb_publisher
-(
-    publisher_uid        NUMBER           NOT NULL, 
-    publisher_name       VARCHAR2(100)    NOT NULL, 
-    publisher_num        VARCHAR2(12)     NOT NULL, 
-    publisher_rep        VARCHAR2(30)     NOT NULL, 
-    publisher_contact    VARCHAR2(60)     NOT NULL, 
-    publisher_address    VARCHAR2(200)    NOT NULL, 
-    CONSTRAINT TB_PUBLISHER_PK PRIMARY KEY (publisher_uid)
-);
-
-ALTER TABLE tb_publisher
-    ADD CONSTRAINT UC_publisher_num UNIQUE (publisher_num);
    
        
 CREATE TABLE tb_order
