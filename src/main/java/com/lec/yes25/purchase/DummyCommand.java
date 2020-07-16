@@ -1,4 +1,4 @@
-package com.lec.yes25.personnel.command;
+package com.lec.yes25.purchase;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

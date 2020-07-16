@@ -1,4 +1,4 @@
-package com.lec.yes25.beans;
+package com.lec.yse25.logistics;
 
 public interface LogisticsDAO {
 

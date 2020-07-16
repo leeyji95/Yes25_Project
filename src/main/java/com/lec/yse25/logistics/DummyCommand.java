@@ -1,4 +1,4 @@
-package com.lec.yes25.accounting.command;
+package com.lec.yse25.logistics;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

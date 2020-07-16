@@ -1,4 +1,4 @@
-package com.lec.yes25.beans;
+package com.lec.yes25.purchase;
 
 public interface PurchaseDAO {
 

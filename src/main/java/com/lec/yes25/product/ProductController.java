@@ -1,4 +1,4 @@
-package com.lec.yes25.controller;
+package com.lec.yes25.product;
 
 import org.springframework.stereotype.Controller;
 

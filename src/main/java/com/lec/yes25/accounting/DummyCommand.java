@@ -1,4 +1,4 @@
-package com.lec.yes25.product.command;
+package com.lec.yes25.accounting;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
