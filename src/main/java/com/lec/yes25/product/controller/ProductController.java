@@ -1,4 +1,4 @@
-package com.lec.yes25.product;
+package com.lec.yes25.product.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
