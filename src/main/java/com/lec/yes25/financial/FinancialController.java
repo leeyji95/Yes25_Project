@@ -7,7 +7,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lec.common.C;
-import com.lec.common.Command;
 
 @Controller
 @RequestMapping("/financial")
@@ -29,9 +28,11 @@ public class FinancialController {
 	}
 	
 	// 경로 설정
-	@RequestMapping("/write.bn")
-	public String write() {
-		return "financial/write";
+	@RequestMapping("/financialMain.bn")
+	public String list(Model model) {
+		command = new FListCommand();
+		command.execute(model);
+		return "financial/financialMain";
 	}
 	
 	@RequestMapping("/writeOk.bn")
