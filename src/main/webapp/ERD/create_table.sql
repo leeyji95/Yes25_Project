@@ -161,7 +161,8 @@ CREATE TABLE tb_statement
     stmt_sum         NUMBER    NOT NULL, 
     stmt_manager     NUMBER    NOT NULL, 
     stmt_approver    NUMBER    NOT NULL, 
-    stmt_proceed     NUMBER    DEFAULT 1 NOT NULL, 
+    stmt_proceed     NUMBER    DEFAULT 1 NOT NULL,
+    stmt_writer      NUMBER    NOT NULL,
     CONSTRAINT TB_STATEMENT_PK PRIMARY KEY (stmt_uid)
 );
 
