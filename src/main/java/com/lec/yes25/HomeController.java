@@ -46,4 +46,13 @@ public class HomeController {
 	public String template() {		 
 		return "template";
 	}
+	
+	@RequestMapping(value="/nav") 
+	public String nav() {		 
+		return "nav";
+	}
+	@RequestMapping(value="/left") 
+	public String left() {		 
+		return "left_menu";
+	}
 }
