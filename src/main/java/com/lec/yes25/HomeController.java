@@ -41,4 +41,9 @@ public class HomeController {
 	public String indexxx() {		 // indexxx() 핸들러가 수행되고
 		return "index"; // → /WEB-INF/views/index.jsp 를 리턴하여 response 되게 한다.
 	}
+	
+	@RequestMapping(value="/template") 
+	public String template() {		 
+		return "template";
+	}
 }
