@@ -59,6 +59,9 @@ pom.xml.next
 release.properties
 dependency-reduced-pom.xml
 
+log4j.xml
+pom.properities
+MANIFEST.MF
 
 
 
