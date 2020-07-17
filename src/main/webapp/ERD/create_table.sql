@@ -90,6 +90,7 @@ CREATE TABLE tb_emp
     emp_admin            NUMBER           NOT NULL, 
     CONSTRAINT TB_EMP_PK PRIMARY KEY (emp_uid)
 );
+SELECT * FROM tb_emp ;
 
 ALTER TABLE tb_emp
     ADD CONSTRAINT FK_tb_emp_position_uid_tb_posi FOREIGN KEY (position_uid)
@@ -119,6 +120,7 @@ CREATE TABLE tb_commute
     commute_overtime    NUMBER          NULL, 
     CONSTRAINT TB_COMMUTE_PK PRIMARY KEY (commute_uid)
 );
+SELECT * FROM tb_commute ;
 
 ALTER TABLE tb_commute
     ADD CONSTRAINT FK_tb_commute_emp_uid_tb_emp_e FOREIGN KEY (emp_uid)
@@ -136,11 +138,13 @@ CREATE TABLE tb_apply
     is_apply             NUMBER    NULL, 
     CONSTRAINT TB_APPLY_PK PRIMARY KEY (apply_uid)
 );
-
+SELECT * FROM tb_apply ;
 
 ALTER TABLE tb_apply
     ADD CONSTRAINT FK_tb_apply_emp_uid_tb_emp_emp FOREIGN KEY (emp_uid)
         REFERENCES tb_emp (emp_uid);
+       
+       
        
 -- 계정과목 테이블      
 CREATE TABLE tb_account

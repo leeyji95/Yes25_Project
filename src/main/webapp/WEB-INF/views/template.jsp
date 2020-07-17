@@ -22,7 +22,7 @@
 
 			<!-- 본문, 내가 할 거 -->
 			<div class="col main pt-5 mt-3">
-				<h1 class="display-4 d-none d-sm-block">YES25 도서관리</h1>
+				<h1 class="display-4 d-none d-sm-block">YES25 근태관리</h1>
 				<hr>
 				<!-- 검색창 -->
 				<div>
