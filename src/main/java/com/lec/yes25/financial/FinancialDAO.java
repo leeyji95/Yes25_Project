@@ -1,5 +1,10 @@
 package com.lec.yes25.financial;
 
-public interface FinancialDAO {
+import java.util.List;
 
+import org.mybatis.spring.annotation.MapperScan;
+
+@MapperScan
+public interface FinancialDAO {
+	public List<FinancialDTO> select();
 }
