@@ -18,52 +18,42 @@
 </head>
 <body>
 
-
-
-	<div class="container-fluid" id="main">
-		<div class="row row-offcanvas row-offcanvas-left">
-			<div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0"
-				id="sidebar" role="navigation">
-				<ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
-					<li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-					<li class="nav-item"><a class="nav-link" href="#"
-						data-toggle="collapse" data-target="#submenu1">매출</a>
-						<ul class="list-unstyled flex-column pl-3 collapse" id="submenu1"
-							aria-expanded="false">
-							<li class="nav-item"><a class="nav-link" href="#">매출관리 1</a></li>
-							<li class="nav-item"><a class="nav-link" href="#">매출관리 2</a></li>
-						</ul></li>
-					<li class="nav-item"><a class="nav-link" href="#">물류</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">상품</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">구매</a></li>
-					<li class="nav-item"><a class="nav-link" href="#">인사</a></li>
-					<!-- <li class="nav-item"><a class="nav-link" href="#">Layouts</a></li>
+	<div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0"
+		id="sidebar" role="navigation">
+		<ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
+			<li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
+			<li class="nav-item"><a class="nav-link" href="#"
+				data-toggle="collapse" data-target="#submenu1">매출</a>
+				<ul class="list-unstyled flex-column pl-3 collapse" id="submenu1"
+					aria-expanded="false">
+					<li class="nav-item"><a class="nav-link" href="#">매출관리 1</a></li>
+					<li class="nav-item"><a class="nav-link" href="#">매출관리 2</a></li>
+				</ul></li>
+			<li class="nav-item"><a class="nav-link" href="#">물류</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">상품</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">구매</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">인사</a></li>
+			<!-- <li class="nav-item"><a class="nav-link" href="#">Layouts</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Templates</a></li>
                 <li class="nav-item"><a class="nav-link" href="#">Themes</a></li> -->
-				</ul>
-			</div>
-			<!--/col-->
-
-
-			<div class="col main pt-5 mt-3">
-				<h1 class="display-4 d-none d-sm-block">YES25 Dashboard</h1>
-				<p class="lead d-none d-sm-block">Plus off-canvas sidebar, based
-					on Bootstrap v4</p>
-
-				<div class="alert alert-warning fade collapse" role="alert"
-					id="myAlert">
-					<button type="button" class="close" data-dismiss="alert"
-						aria-label="Close">
-						<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
-					</button>
-					<strong>이것은 알림입니다!</strong> 알릴 내용 입력해주세요.
-				</div>
-			</div>
-			
-		<!--/row-->
-		</div>
-	<!--/main col-->
+		</ul>
 	</div>
+	<!--/col-->
+
+
+<!-- 	<div class="col main pt-5 mt-3">
+		<h1 class="display-4 d-none d-sm-block">YES25 Dashboard</h1>
+
+		<div class="alert alert-warning fade collapse" role="alert"
+			id="myAlert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">×</span> <span class="sr-only">Close</span>
+			</button>
+			<strong>이것은 알림입니다!</strong> 알릴 내용 입력해주세요.
+		</div>
+	</div> -->
+
 	<!--scripts loaded here-->
 	<script
 		src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

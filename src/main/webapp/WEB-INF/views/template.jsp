@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -17,9 +18,11 @@
 	href="${pageContext.request.contextPath}/CSS/styles.css" />
 </head>
 <body>
+<jsp:include page="nav.jsp"/>
+
 	<div class="container-fluid" id="main">
 		<div class="row row-offcanvas row-offcanvas-left">
-
+ 			<jsp:include page="left_menu.jsp"/>
 			<!-- 본문, 내가 할 거 -->
 			<div class="col main pt-5 mt-3">
 				<h1 class="display-4 d-none d-sm-block">YES25 근태관리</h1>

@@ -1,8 +1,10 @@
 DROP TABLE tb_emp CASCADE CONSTRAINT purge;
 DROP SEQUENCE emp_seq;
 
-CREATE SEQUENCE emp_seq;
-
+CREATE SEQUENCE emp_seq
+START WITH 1
+INCREMENT BY 1
+MAXVALUE 9999;
 
 --테이블 생성
 CREATE TABLE tb_emp
@@ -59,6 +61,11 @@ CREATE TABLE tb_emp
     emp_hiredate    DATE            DEFAULT SYSDATE NOT NULL, 
     emp_admin       CHAR(1)         DEFAULT 'N' NOT NULL
 );
+DELETE FROM TB_EMP ;
+SELECT * FROM tb_emp ;
+
+
+
 
 CREATE TABLE tb_commute
 (
@@ -72,6 +79,9 @@ CREATE TABLE tb_commute
     commute_state       VARCHAR2(10)    NOT NULL, 
     commute_is_apply    NUMBER          DEFAULT 0 NULL
 );
+DELETE FROM tb_commute ;
+SELECT * FROM tb_commute ;
+
 
 
 CREATE TABLE tb_apply
@@ -84,6 +94,11 @@ CREATE TABLE tb_apply
     apply_outplace       VARCHAR2(200)    NULL, 
     commute_uid          NUMBER           NOT NULL REFERENCES tb_commute (commute_uid)
 );
+DELETE FROM tb_apply ;
+SELECT * FROM tb_apply ;
+
+
+
 
 CREATE TABLE tb_password
 (
@@ -92,7 +107,8 @@ CREATE TABLE tb_password
     pw_change    VARCHAR2(200)    NOT NULL, 
     emp_uid      NUMBER           NOT NULL REFERENCES tb_emp (emp_uid), 
 );
-
+DELETE FROM tb_password ;
+SELECT * FROM tb_password ;
  
 
 
