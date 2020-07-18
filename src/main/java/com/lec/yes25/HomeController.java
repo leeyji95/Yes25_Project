@@ -55,4 +55,8 @@ public class HomeController {
 	public String left() {		 
 		return "left_menu";
 	}
+	@RequestMapping(value="/login") 
+	public String login() {		 
+		return "personnel/login";
+	}
 }
