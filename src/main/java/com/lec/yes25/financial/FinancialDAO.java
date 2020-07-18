@@ -7,4 +7,7 @@ import org.mybatis.spring.annotation.MapperScan;
 @MapperScan
 public interface FinancialDAO {
 	public List<FinancialDTO> select();
+	
+	// insert
+	public int insert(final FinancialDTO dto);
 }

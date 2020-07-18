@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.lec.common.C;
 
@@ -35,8 +36,15 @@ public class FinancialController {
 		return "financial/financialMain";
 	}
 	
-	@RequestMapping("/writeOk.bn")
-	public String writeOk() {
+	@RequestMapping("/write.bn")
+	public String write(Model model) {
+		return "financial/write";
+	}
+	
+	@RequestMapping(value = "/writeOk.bn", method = RequestMethod.POST)
+	public String writeOk(FinancialDTO dto, Model model) {
+		model.addAttribute("dto", dto);
+		new FWriteCommand().execute(model);
 		return "financial/writeOk";
 	}
 	

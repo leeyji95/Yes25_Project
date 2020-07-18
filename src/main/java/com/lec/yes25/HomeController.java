@@ -36,27 +36,4 @@ public class HomeController {
 		return "home";
 	}
 	
-	
-	@RequestMapping(value="/index") // /index 으로 요청이 오면
-	public String indexxx() {		 // indexxx() 핸들러가 수행되고
-		return "index"; // → /WEB-INF/views/index.jsp 를 리턴하여 response 되게 한다.
-	}
-	
-	@RequestMapping(value="/template") 
-	public String template() {		 
-		return "template";
-	}
-	
-	@RequestMapping(value="/nav") 
-	public String nav() {		 
-		return "nav";
-	}
-	@RequestMapping(value="/left") 
-	public String left() {		 
-		return "left_menu";
-	}
-	@RequestMapping(value="/login") 
-	public String login() {		 
-		return "personnel/login";
-	}
 }
