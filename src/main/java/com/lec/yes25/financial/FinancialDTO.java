@@ -1,5 +1,10 @@
 package com.lec.yes25.financial;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 //stmt_uid         NUMBER    NOT NULL, 전표식별번호
 //stmt_date        DATE      NOT NULL, 전표 발행일자
 //account_uid      NUMBER    NOT NULL, 계정과목 번호
@@ -12,11 +17,13 @@ package com.lec.yes25.financial;
 
 
 public class FinancialDTO {
-	private int uid;		// stmt_uid, 전표식별번호
-	private String date;	// stmt_date , 전표 발행일자
-	private int accountUid;	// account_uid, 계정과목 번호
+	private int stmt_uid;		// stmt_uid, 전표식별번호
+	@JsonProperty("regdate")
+	private String regDate;	// stmt_date , 전표 발행일자
+	@JsonProperty("accountuid")
+	private int account_uid;	// account_uid, 계정과목 번호
 	private String summary;	//stmt_summary, 적요
-	private int sum;		//stmt_sum, 금액
+	private int money;		//stmt_sum, 금액
 	private int writer;		//stmt_writer, 작성자
 	private int manager;	//stmt_manager, 담당자
 	private int approver;	//stmt_approver, 결제자
@@ -24,39 +31,39 @@ public class FinancialDTO {
 	
 	// 생성자 생성
 	public FinancialDTO() {}
-	public FinancialDTO(int uid, String date, int accountUid, String summary, int sum, 
+	public FinancialDTO(int stmt_uid, String regDate, int account_uid, String summary, int money, 
 			int writer, int manager, int approver) {
 		super();
-		this.uid = uid;
-		this.date = date;
-		this.accountUid = accountUid;
+		this.stmt_uid = stmt_uid;
+		this.regDate = regDate;
+		this.account_uid = account_uid;
 		this.summary = summary;
-		this.sum = sum;
+		this.money = money;
 		this.manager = manager;
 		this.approver = approver;
 		this.writer = writer;
 	}
 	
 	// getter setter
-	public int getUid() {
-		return uid;
+	public int getStmt_uid() {
+		return stmt_uid;
 	}
-	public void setUid(int uid) {
-		this.uid = uid;
-	}
-	
-	public String getDate() {
-		return date;
-	}
-	public void setDate(String date) {
-		this.date = date;
+	public void setStmt_uid(int stmt_uid) {
+		this.stmt_uid = stmt_uid;
 	}
 	
-	public int getAccountUid() {
-		return accountUid;
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setAccountUid(int accountUid) {
-		this.accountUid = accountUid;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
+	
+	public int getAccount_uid() {
+		return account_uid;
+	}
+	public void setAccount_uid(int account_uid) {
+		this.account_uid = account_uid;
 	}
 	
 	public String getSummary() {
@@ -66,11 +73,11 @@ public class FinancialDTO {
 		this.summary = summary;
 	}
 	
-	public int getSum() {
-		return sum;
+	public int getMoney() {
+		return money;
 	}
-	public void setSum(int sum) {
-		this.sum = sum;
+	public void setMoney(int money) {
+		this.money = money;
 	}
 	
 	public int getWriter() {
@@ -100,5 +107,27 @@ public class FinancialDTO {
 	public void setProceed(int proceed) {
 		this.proceed = proceed;
 	}
-	
+	/*
+	//들어오는값찍기위한 셋팅
+	public String toStringDefault() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.DEFAULT_STYLE);
+    }
+    public String toStringJson() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.JSON_STYLE);
+    }    
+    public String toStringMultiline() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
+    }
+    public String toStringNoClass() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_CLASS_NAME_STYLE);
+    }    
+    public String toStringNoFieldName() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.NO_FIELD_NAMES_STYLE);
+    }
+    public String toStringShortPrefix() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SHORT_PREFIX_STYLE);
+    }    
+    public String toStringSimple() {
+        return ToStringBuilder.reflectionToString(this, ToStringStyle.SIMPLE_STYLE);
+    }     */   
 }

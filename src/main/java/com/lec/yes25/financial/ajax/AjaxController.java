@@ -5,30 +5,22 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.lec.yes25.financial.FWriteCommand;
 import com.lec.yes25.financial.FinancialDTO;
 
 @RestController
 @RequestMapping("/financial/*.ajax")
 public class AjaxController {
 
-	@RequestMapping("financial/list.ajax")
+	@RequestMapping(value="financial/list.ajax")
 	public AjaxWriteList List(HttpServletRequest request, HttpServletResponse response) {
 		new AjaxListCommand().execute(request, response);
 		return buildList(request);
 	}
 	
-	
-	public AjaxWriteResult buildResult(HttpServletRequest request) { 
-		AjaxWriteResult result = new AjaxWriteResult(); 
-		
-		result.setStatus((String)request.getAttribute("status")); 
-		result.setMessage((String)request.getAttribute("message")); 
-		result.setCount((Integer)request.getAttribute("result")); 
-		return result; 
-	} // end buildResult()
-
 	public AjaxWriteList buildList(HttpServletRequest request) { 
 		List<FinancialDTO> list = (List<FinancialDTO>) request.getAttribute("list");
 		
@@ -53,4 +45,25 @@ public class AjaxController {
 		} return result; 
 	} // end buildList()
 	
-}
+	
+	@RequestMapping(value = "/financial/writeOk.ajax", method = RequestMethod.POST)
+	public AjaxWriteResult writeOk(HttpServletRequest request, HttpServletResponse response) {
+		new AjaxWriteCommand().execute(request, response);
+		return buildResult(request);
+	} // end writeOk()
+	
+	
+	
+	
+	
+	
+	public AjaxWriteResult buildResult(HttpServletRequest request) { 
+		AjaxWriteResult result = new AjaxWriteResult(); 
+		
+		result.setStatus((String)request.getAttribute("status")); 
+		result.setMessage((String)request.getAttribute("message")); 
+		result.setCount((Integer)request.getAttribute("result")); 
+		return result; 
+	} // end buildResult()
+	
+} // end Controller

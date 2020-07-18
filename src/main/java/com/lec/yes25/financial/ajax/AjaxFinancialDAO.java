@@ -14,5 +14,21 @@ public interface AjaxFinancialDAO {
 			@Param("from") int from,
 			@Param("pageRows") int pageRows
 			);
-
+	
+	// 전체 글의 개수
+	public int countAll();
+	
+	// insert
+	public int insert(
+			@Param("regDate") String regDate,
+			@Param("account_uid") int account_uid,
+			@Param("summary") String summary,
+			@Param("money") int money,
+			@Param("writer") int writer,
+			@Param("manager") int manager,
+			@Param("approver") int approver
+			);
+	
+	
+	
 }
