@@ -5,9 +5,10 @@ $(document).ready(function() {
 	// 게시판 목록 1페이지 로딩
 	loadPage(page);
 	
-	// 글작성 모달창
-	//$("#btnWrite").modal('toggle');
-	//$('#btnWrite').modal('show');
+	//글 작성 submit 되면
+	$("#frmWrite").submit(function(){
+		return chkWrite();
+	});
 
 
 
@@ -117,8 +118,6 @@ function chkWrite() {
 	
 	var data = $("#frmWrite").serialize();	// 해당 폼 안의 name이 있는 것들을 끌어 들어옴
 											// 리턴값은 Object
-	alert(data);
-	
 	// ajax request
 	$.ajax({
 		url : "writeOk.ajax",
@@ -129,19 +128,18 @@ function chkWrite() {
 			if(status == "success"){
 				if(data.status = "OK") {
 					alert("INSERT 성공" + data.count + "개 : " + data.status);
-					//loadPage(1);	// 첫 페이지 리로딩
+					$('.modal-backdrop').remove();	// 모달창 닫기
+					$('#WriteModal').modal('hide');	// 모달창 뒤의 검은 화면 닫기
+					loadPage(1);	// 첫 페이지 리로딩
 				} else {
 					alert("INSERT 실패" + data.status + " : " + data.message);
 				}
-			} else {
-				alert('실패');
-			}
+			} 
 		}
 	});
 	
 	// request 후, form 에 입력된것 reset()
 	$("#frmWrite")[0].reset();
-	
 	// type이 submit일때 비록 action이 없더라도
 	// 자기 페이지로 리로딩된다...!!
 	// 페이지 리로딩을 원치 않는다면 리턴 값을 false 값을 주면 된다!

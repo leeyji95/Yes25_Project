@@ -33,7 +33,6 @@ public class AjaxWriteCommand implements Command {
 		//	message.append("[유효하지 않은 parameter : 글제목 필수]");
 		//} else {
 			try {
-				System.out.println("실행하니??");
 				cnt = dao.insert(regDate, account_uid, summary,
 						money, writer, manager, approver);
 				if(cnt == 0) {

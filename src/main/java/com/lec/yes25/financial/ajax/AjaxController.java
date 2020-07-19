@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.lec.yes25.financial.FWriteCommand;
 import com.lec.yes25.financial.FinancialDTO;
 
 @RestController

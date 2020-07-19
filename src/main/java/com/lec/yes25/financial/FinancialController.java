@@ -36,26 +36,5 @@ public class FinancialController {
 		return "financial/financialMain";
 	}
 	
-	@RequestMapping("/write.bn")
-	public String write(Model model) {
-		return "financial/write";
-	}
-	
-//	@RequestMapping(value = "/writeOk.bn", method = RequestMethod.POST)
-//	public String writeOk(FinancialDTO dto, Model model) {
-//		model.addAttribute("dto", dto);
-//		System.out.println("writeOk.bn()>>>"+model.toString());
-//		new FWriteCommand().execute(model);
-//		return "financial/writeOk";
-//	}
-	
-	@RequestMapping(value = "/writeOk.bn", method = RequestMethod.POST)
-	public String writeOk(FinancialDTO dto, Model model) {
-		model.addAttribute("dto", dto);
-		new FWriteCommand().execute(model);
-		return "financial/writeOk";
-	}
-	
-	
 	
 }

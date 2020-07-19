@@ -18,9 +18,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class FinancialDTO {
 	private int stmt_uid;		// stmt_uid, 전표식별번호
-	@JsonProperty("regdate")
 	private String regDate;	// stmt_date , 전표 발행일자
-	@JsonProperty("accountuid")
 	private int account_uid;	// account_uid, 계정과목 번호
 	private String summary;	//stmt_summary, 적요
 	private int money;		//stmt_sum, 금액
@@ -31,19 +29,21 @@ public class FinancialDTO {
 	
 	// 생성자 생성
 	public FinancialDTO() {}
-	public FinancialDTO(int stmt_uid, String regDate, int account_uid, String summary, int money, 
-			int writer, int manager, int approver) {
+	public FinancialDTO(int stmt_uid, String regDate, int account_uid, String summary, int money, int writer,
+			int manager, int approver, int proceed) {
 		super();
 		this.stmt_uid = stmt_uid;
 		this.regDate = regDate;
 		this.account_uid = account_uid;
 		this.summary = summary;
 		this.money = money;
+		this.writer = writer;
 		this.manager = manager;
 		this.approver = approver;
-		this.writer = writer;
+		this.proceed = proceed;
 	}
-	
+
+
 	// getter setter
 	public int getStmt_uid() {
 		return stmt_uid;
