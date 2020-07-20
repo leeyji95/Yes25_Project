@@ -1,4 +1,4 @@
-package com.lec.yse25.logistics;
+package com.lec.yes25.logistics;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +23,11 @@ public class LogisticsCotroller {
 	@RequestMapping("/inventory")
 	public String inventory(Model model) {
 		return "logistics/inventory";
+	}
+	
+	@RequestMapping("/inbound")
+	public String inBound(Model model) {
+		return "logistics/inbound";
 	}
 	
 	

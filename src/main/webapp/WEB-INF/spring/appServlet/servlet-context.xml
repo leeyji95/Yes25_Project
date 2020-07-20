@@ -25,6 +25,7 @@
    
    <context:component-scan base-package="com.lec.yes25" />
    
+   
    <!-- spring-jdbc 빈 객체 생성 -->
    <!-- DataSource 객체 -->
    <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
