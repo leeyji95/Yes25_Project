@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.lec.yes25.logistics.LogisticsDAO">
+	<select id="selectFromRow" resultType="com.lec.yes25.logistics.LogisticsDTO" parameterType="int">
+		<![CDATA[
+		SELECT 
+			*
+		FROM
+			(SELECT ROWNUM AS RNUM, T.* FROM (SELECT * FROM tb_order_test WHERE order_state = 0 ORDER BY order_uid DESC) T) 
+		WHERE 
+			RNUM >= #{param1} AND RNUM < (#{param1} + #{param2})
+			]]>
+	</select>
+	
+	<select id="countAll" resultType="int">
+		SELECT
+			count(*)
+		FROM
+			tb_order_test
+	</select>
+	
+	<insert id="insertByUidFromOrder" flushCache="true" parameterType="java.util.ArrayList">
+		INSERT INTO 
+			tb_inbound_test (order_uid)
+		SELECT 
+			order_uid
+		FROM 
+			tb_order_test 
+		WHERE 
+			order_uid IN (
+				<foreach collection="array" item="item" index="index" separator=",">
+					${item}
+				</foreach>
+			)
+	</insert>
+	
+	<update id="updateByUidFromOrder" flushCache="true" parameterType="java.util.ArrayList">
+		UPDATE
+			tb_order_test
+		SET
+			order_state = 1
+		WHERE 
+			order_uid IN (
+				<foreach collection="array" item="item" index="index" separator=",">
+					${item}
+				</foreach>
+			)
+	</update>
+	
+	<update id="updateByUidFromStock" flushCache="true" parameterType="java.util.ArrayList">
+		<foreach collection="array" item="item" index="index">
+					UPDATE 
+						tb_stock_test 
+					SET 
+						stock_quantity = stock_quantity + (SELECT order_quantity FROM tb_order_test WHERE order_uid = ${item})
+					WHERE 
+						book_uid = (SELECT book_uid FROM tb_order_test WHERE order_uid = ${item});
+		</foreach>
+	</update>
+	
+
+</mapper>
