@@ -55,7 +55,7 @@
 					SET 
 						stock_quantity = stock_quantity + (SELECT order_quantity FROM tb_order_test WHERE order_uid = ${item})
 					WHERE 
-						book_uid = (SELECT book_uid FROM tb_order_test WHERE order_uid = ${item});
+						book_uid = (SELECT book_uid FROM tb_order_test WHERE order_uid = ${item})
 		</foreach>
 	</update>
 	

@@ -1,44 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lec.yes25.mapper.FinancialDAO">
-
-<!-- 비교연산자 같은 경우에는 xml에서 사용할 수 없기 때문에 CDATA를 이용하여 사용한다 <![CDATA[ ]>  --> 
-
-
-
-
-
+<!DOCTYPE mapper 
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="com.lec.yes25.financial.FinancialDAO">
 
 <!-- list -->
 <select id="select" resultType="com.lec.yes25.financial.FinancialDTO">
-	SELSECT
+	SELECT
 		stmt_uid,
-		stmt_date date,
+		stmt_date regDate,
 		account_uid,
 		stmt_summary summary,
-		stmt_sum sum,
+		stmt_sum money,
 		stmt_writer writer,
 		stmt_manager manager,
 		stmt_approver approver,
 		stmt_proceed proceed
 	FROM 
-		tb_statement;
+		tb_statement
 </select>
 
 <!-- write -->
-<insert id = "write" flushCache="true">
+<insert id="insert" flushCache="true"
+	parameterType="com.lec.yes25.financial.FinancialDTO"
+	keyProperty="stmt_uid" 
+	useGeneratedKeys="true"
+	keyColumn="stmt_uid">
 	INSERT INTO tb_statement
-		(stmt_uid, 
-		stmt_date, 
+		(stmt_uid,
+		stmt_date,
 		account_uid, 
 		stmt_summary, 
-		stmt_sum, 
- 		stmt_writer, 
- 		stmt_manager, 
- 		stmt_approver)
-	VALUES(statement_seq.nextval, '2020-01-01', 1, '적요', 5000, 2, 3, 4);
-
+		stmt_sum money,
+		stmt_writer,
+		stmt_manager, 
+		stmt_approver)
+	VALUES
+		(statement_seq.nextval,
+		SYSDATE,
+		#{account_uid},
+		#{summary},
+		#{money},
+		#{writer},
+		#{manager},
+		#{approver})
 </insert>
+
 
 
 </mapper>

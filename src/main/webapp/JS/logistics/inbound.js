@@ -73,7 +73,7 @@ function update(){
 		}
 	});
 	
-	alert(uids);
+	//alert(uids);
 	
 	if(uids.length == 0){
 		alert('삭제할 글을 체크해주세요');
@@ -89,9 +89,10 @@ function update(){
 			cache: false,
 			success: function(data, status){
 				if(status== "success"){
-					if(data.satus=="OK"){
+					if(data.status=="OK"){
 						alert("입고 완료" + data.count + "건");
-						loagPage(window.page);
+						loadPage(window.page);
+						
 					} else {
 						alert("입고 처리 실패" + data.message);
 					}

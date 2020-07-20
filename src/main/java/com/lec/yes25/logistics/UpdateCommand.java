@@ -21,7 +21,7 @@ public class UpdateCommand implements Command {
 		StringBuffer message = new StringBuffer();
 		String status = "FAIL";
 		
-		String [] params = request.getParameterValues("uid");
+		String [] params = request.getParameterValues("order_uid");
 		int [] uids = null;
 		
 		if(params == null || params.length == 0) {
