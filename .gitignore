@@ -62,7 +62,12 @@ dependency-reduced-pom.xml
 log4j.xml
 pom.properities
 MANIFEST.MF
+<<<<<<< HEAD
 
 
 
+=======
+target/*
+*/target/*
+>>>>>>> branch 'master' of https://github.com/leeyji95/Yes25_Project.git
 
