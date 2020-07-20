@@ -231,9 +231,10 @@ CREATE TABLE tb_book
 (
     book_uid         NUMBER           NOT NULL, 
     book_subject     VARCHAR2(200)    NOT NULL, 
-    book_author      VARCHAR2(20)     NOT NULL, 
+    book_author      VARCHAR2(100)    NOT NULL, 
     book_content     CLOB             NULL, 
-    book_pubdate     DATE             NOT NULL, 
+    book_price       NUMBER           NULL, 
+    book_pubdate     DATE             NULL, 
     book_regdate     DATE             DEFAULT SYSDATE NOT NULL, 
     book_isbn        NUMBER           NULL, 
     category_uid     NUMBER           NOT NULL, 

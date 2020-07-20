@@ -8,6 +8,7 @@ public class BookDTO {
 	private String subject;
 	private String author;
 	private String content;
+	private int price;
 	private Date pubdate;
 	private Date regdate;
 	private int isbn;
@@ -19,12 +20,13 @@ public class BookDTO {
 	
 	
 	
-	public BookDTO(String subject, String author, String content, Date pubdate, Date regdate, int isbn, int categoryUid,
+	public BookDTO(String subject, String author, String content, int price, Date pubdate, Date regdate, int isbn, int categoryUid,
 			int pubUid) {
 		super();
 		this.subject = subject;
 		this.author = author;
 		this.content = content;
+		this.price = price;
 		this.pubdate = pubdate;
 		this.regdate = regdate;
 		this.isbn = isbn;
@@ -57,6 +59,12 @@ public class BookDTO {
 	}
 	public void setContent(String content) {
 		this.content = content;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
 	}
 	public Date getPubdate() {
 		return pubdate;

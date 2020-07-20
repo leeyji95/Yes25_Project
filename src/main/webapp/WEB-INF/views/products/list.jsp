@@ -15,6 +15,7 @@
 	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/CSS/styles.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 </head>
 <body>
 	<div class="container-fluid" id="main">
@@ -26,18 +27,81 @@
 				<hr>
 				<!-- 검색창 -->
 				<div>
-				<select>
-				<option>제목</option>
-				<option>내용</option>
-				<option>저자</option>
-				<option>출판사</option>
-				</select>
-				
-				<input type="text" name="keyword">
-				<input type="button" value="검색">
+					<select>
+						<option>제목</option>
+						<option>내용</option>
+						<option>저자</option>
+						<option>출판사</option>
+					</select> <input type="text" name="keyword"> <input type="button"
+						value="검색">
 				</div>
 				<!-- 검색창 끝 -->
-				
+
+				<div id="app">
+
+					<!-- #1 : Button trigger modal -->
+					<button @click="handle_toggle" type="button">모달창 띄우기</button>
+
+					<!-- #2 : Modal Window -->
+					<div v-show="is_show">
+						<%--글작성/보기/수정 대화상자 --%>
+						<form class="" id="frmWrite" name="frmWrite" action='ajax/insert.ajax'
+							method="post">
+							<div class="container">
+								<h3 class="title">도서 등록</h3>
+
+								<span class="close" title="Close Modal">&times;</span> <input
+									type="hidden" name="uid">
+								<%-- 삭제나 수정 위해 필요 --%>
+
+								<div class="d01 btn_group_header">
+									<div class="left">
+										<p id="viewcnt"></p>
+									</div>
+									<div class="right">
+										<p id="regdate"></p>
+									</div>
+									<div class="clear"></div>
+								</div>
+
+								<label for="subject"><b>도서제목</b></label> 
+								<input type="text" name="subject" required> 
+								
+								<label for="price"><b>도서가격</b></label> 
+								<input type="text" name="price">
+								
+								<label for="author"><b>저자</b></label>
+								<input type="text" name="author" required> 
+								
+								<label for="content"><b>도서내용</b></label>
+								<textarea name="content"></textarea>
+								
+								<div class="d01 btn_group_write">
+									<input type="submit" class="" value="등록">
+								</div>
+							</div>
+						</form>
+
+						<button @click="handle_toggle" type="button">취소</button>
+					</div>
+
+				</div>
+				<script>
+new Vue({
+  el: '#app',
+  data: () => { // #1
+    return {
+      is_show: false 
+    }
+  },
+  methods:{
+    handle_toggle: function(){ 
+      this.is_show = !this.is_show; // #2, #3
+    },
+  }
+});
+</script>
+
 				<div class="row my-4">
 					<div class="col-lg-10 col-md-9">
 						<div class="table-responsive">
@@ -46,83 +110,53 @@
 									<tr>
 										<th>번호</th>
 										<th>사진</th>
-										<th>내용</th>
+										<th>제목</th>
 										<th>가격</th>
 										<th>수정 삭제</th>
 									</tr>
 								</thead>
-								<tbody>
-									<tr>
-										<td>1,001</td>
-										<td>responsive</td>
-										<td>bootstrap</td>
-										<td>cards</td>
-										<td>grid</td>
-									</tr>
-									<tr>
-										<td>1,002</td>
-										<td>rwd</td>
-										<td>web designers</td>
-										<td>theme</td>
-										<td>responsive</td>
-									</tr>
-									<tr>
-										<td>1,003</td>
-										<td>free</td>
-										<td>open-source</td>
-										<td>download</td>
-										<td>template</td>
-									</tr>
-									<tr>
-										<td>1,003</td>
-										<td>frontend</td>
-										<td>developer</td>
-										<td>coding</td>
-										<td>card panel</td>
-									</tr>
-									<tr>
-										<td>1,004</td>
-										<td>migration</td>
-										<td>bootstrap 4</td>
-										<td>mobile-first</td>
-										<td>design</td>
-									</tr>
-									<tr>
-										<td>1,005</td>
-										<td>navbar</td>
-										<td>sticky</td>
-										<td>jumbtron</td>
-										<td>header</td>
-									</tr>
-									<tr>
-										<td>1,006</td>
-										<td>collapse</td>
-										<td>affix</td>
-										<td>submenu</td>
-										<td>flexbox</td>
-									</tr>
-									<tr>
-										<td>1,007</td>
-										<td>layout</td>
-										<td>examples</td>
-										<td>themes</td>
-										<td>grid</td>
-									</tr>
-									<tr>
-										<td>1,008</td>
-										<td>migration</td>
-										<td>bootstrap 4</td>
-										<td>flexbox</td>
-										<td>design</td>
+								<tbody id="mainTab">
+									<tr v-for="post in posts">
+										<td>{{post.bookUid}}</td>
+										<td></td>
+										<td>{{post.subject}}</td>
+										<td>{{post.price}}</td>
+										<td>수정</td>
 									</tr>
 								</tbody>
 							</table>
+							<script>
+				var example1 = new Vue({
+					el : '#mainTab',
+					data : {
+						posts: []
+					},
+					created(){
+						fetch('http://localhost:8000/yes25_project/products/ajax/list.ajax')
+							.then((response) => {
+								if(response.ok){
+									return response.json();
+								}
+								
+								throw new Error('Network response was not ok');
+							})
+							.then((json) => {
+								this.posts = json;
+							})
+							.catch((error) =>{
+								console.log(error);
+							});							
+					}
+				});	
+				</script>
+
 						</div>
 					</div>
 				</div>
 				<!--/row-->
-
-
+				<div class="row">
+					<button>도서등록</button>
+				</div>
 
 			</div>
 			<!--/main col-->

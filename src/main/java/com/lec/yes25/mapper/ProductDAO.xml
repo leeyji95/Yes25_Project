@@ -4,7 +4,7 @@
 
 <select id="select" resultType="com.lec.yes25.product.dto.BookDTO">
 	SELECT 
-		BOOK_UID bookUid, BOOK_SUBJECT subject, BOOK_AUTHOR author, BOOK_CONTENT content, BOOK_PUBDATE pubdate, BOOK_REGDATE regdate, BOOK_ISBN isbn, CATEGORY_UID categoryUid, PUBLISHER_UID pubUid 
+		BOOK_UID bookUid, BOOK_SUBJECT subject, BOOK_AUTHOR author, BOOK_CONTENT content, BOOK_PRICE price, BOOK_PUBDATE pubdate, BOOK_REGDATE regdate, BOOK_ISBN isbn, CATEGORY_UID categoryUid, PUBLISHER_UID pubUid 
 	FROM tb_book 
 	ORDER BY BOOK_UID DESC
 </select>
@@ -12,9 +12,9 @@
 <insert id="insert" flushCache="true"
 	parameterType="com.lec.yes25.product.dto.BookDTO">
 	INSERT INTO TB_BOOK 
-	(BOOK_UID, BOOK_SUBJECT, BOOK_AUTHOR, BOOK_CONTENT, BOOK_PUBDATE, BOOK_REGDATE, BOOK_ISBN, CATEGORY_UID, PUBLISHER_UID) 
+	(BOOK_UID, BOOK_SUBJECT, BOOK_AUTHOR, BOOK_CONTENT, BOOK_PRICE, BOOK_PUBDATE, BOOK_REGDATE, BOOK_ISBN, CATEGORY_UID, PUBLISHER_UID) 
 	VALUES
-	(book_seq.nextval, #{subject}, #{author}, #{content}, #{pubdate}, #{regdate}, #{isbn}, #{categoryUid}, #{pubUid})
+	(book_seq.nextval, #{subject}, #{author}, #{content}, #{price}, SYSDATE, SYSDATE, #{isbn}, #{categoryUid}, #{pubUid})
 </insert>
 
 <delete id="deleteByUid" flushCache="true">
@@ -24,7 +24,7 @@ DELETE FROM TB_BOOK WHERE BOOK_UID = #{param1}
 <update id="update" flushCache="true">
 UPDATE TB_BOOK 
 SET 
-	BOOK_SUBJECT = #{a.subject}, BOOK_AUTHOR = #{a.author}, BOOK_CONTENT = #{a.content}, 
+	BOOK_SUBJECT = #{a.subject}, BOOK_AUTHOR = #{a.author}, BOOK_CONTENT = #{a.content}, BOOK_PRICE = #{a.price},
 	BOOK_PUBDATE = #{a.pubdate}, BOOK_ISBN = #{a.isbn}, CATEGORY_UID = #{a.categoryUid}, PUBLISHER_UID = #{a.pubUid} 
 WHERE BOOK_UID = #{param1}
 </update>
