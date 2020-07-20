@@ -8,6 +8,10 @@ DROP TABLE tb_emp CASCADE CONSTRAINT purge;
 DROP TABLE tb_position CASCADE CONSTRAINT purge;
 DROP TABLE tb_commute CASCADE CONSTRAINT purge;
 DROP TABLE tb_apply CASCADE CONSTRAINT purge;
+<<<<<<< HEAD
+=======
+DROP TABLE tb_password CASCADE CONSTRAINT purge;
+>>>>>>> branch 'master' of https://github.com/leeyji95/Yes25_Project.git
 
 DROP TABLE tb_publisher CASCADE CONSTRAINT purge;
 DROP TABLE tb_book CASCADE CONSTRAINT purge;
