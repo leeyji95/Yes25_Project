@@ -22,7 +22,7 @@
 
 			<!-- 본문, 내가 할 거 -->
 			<div class="col main pt-5 mt-3">
-				<h1 class="display-4 d-none d-sm-block">YES25 도서관리</h1>
+				<h1 class="display-4 d-none d-sm-block">YES25  이예지님 근태관리</h1>
 				<hr>
 				<!-- 검색창 -->
 				<div>
@@ -131,13 +131,9 @@
 
 	</div>
 
-	<script
-		src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-
+	<script	src="http://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+	<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 	<script src="${pageContext.request.contextPath}/JS/scripts.js"></script>
 </body>
 </html>

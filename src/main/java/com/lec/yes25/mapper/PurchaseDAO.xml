@@ -1,3 +1,108 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.lec.yes25.mapper.PurchaseDAO"></mapper>
+<mapper namespace="com.lec.yes25.purchase.PurchaseDAO">
+	<insert id="insert" flushCache="true">
+		INSERT INTO tb_publisher (
+				publisher_uid,
+			    publisher_name, 
+			    publisher_num,
+			    publisher_rep,
+			    publisher_contact,
+			    publisher_address
+		    )
+	    VALUES (
+	    		publisher_seq.nextval,
+			    #{dto.pub_name}, 
+			    #{dto.pub_num},
+			    #{dto.pub_rep},
+			    #{dto.pub_contact},
+			    #{dto.pub_address}
+		    )
+	</insert>
+	
+	<select id="selectByUid" resultType="com.lec.yes25.purchase.PublisherDTO"
+		parameterType="com.lec.yes25.purchase.PublisherDTO">
+		SELECT 
+			publisher_uid pub_uid,
+		    publisher_name pub_name, 
+		    publisher_num pub_num,
+		    publisher_rep pub_rep,
+		    publisher_contact pub_contact,
+		    publisher_address pub_address
+		FROM
+			tb_publisher
+		WHERE 
+			publisher_uid = #{pub_uid}
+	</select>
+	
+	<update id="update" parameterType="com.lec.yes25.purchase.PublisherDTO">
+		UPDATE
+			tb_publisher 
+		SET 
+		    publisher_name = #{dto.pub_name}, 
+		    publisher_num = #{dto.pub_num},
+		    publisher_rep = #{dto.pub_rep},
+		    publisher_contact = #{dto.pub_contact},
+		    publisher_address = #{dto.pub_address}
+		WHERE 
+			publisher_uid = #{dto.pub_uid}
+	</update>
+	
+	<delete id="deleteByUid" parameterType="java.util.Map">
+		DELETE FROM
+			tb_publisher
+		WHERE
+			publisher_uid IN
+			<foreach collection="array" item="item" index="index" separator="," open="(" close=")">
+			    ${array[index]}
+			</foreach>
+	</delete>
+	
+	<!-- 페이징 -->
+	<!-- 글 목록 전체 개수 가져오기 -->
+	<select id="countAll" resultType="java.lang.Integer">
+		SELECT 
+			count(*)
+		FROM 
+			tb_publisher
+		<if test='searchType.equals("pub_name")'>
+			WHERE publisher_name LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test='searchType.equals("pub_rep")'>
+			WHERE publisher_rep LIKE '%'||#{keyword}||'%'
+		</if>
+		<if test='searchType.equals("all")'>
+			WHERE publisher_name LIKE '%'||#{keyword}||'%'
+			OR publisher_rep LIKE '%'||#{keyword}||'%'
+		</if>	
+	</select>
+
+	<!-- romRow 부터 pageRows 만큼 select -->
+	<!-- 몇번째 부터 몇개 만큼 -->
+	<select id="selectFromRow" resultType="com.lec.yes25.purchase.PublisherDTO">
+		SELECT
+			rnum,
+			publisher_uid pub_uid,
+		    publisher_name pub_name, 
+		    publisher_num pub_num,
+		    publisher_rep pub_rep,
+		    publisher_contact pub_contact,
+		    publisher_address pub_address
+		FROM
+			(SELECT Rownum AS rnum, t.* FROM (SELECT * FROM tb_publisher
+			<if test='searchType.equals("pub_name")'>
+				WHERE publisher_name LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test='searchType.equals("pub_rep")'>
+				WHERE publisher_rep LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test='searchType.equals("all")'>
+				WHERE publisher_name LIKE '%'||#{keyword}||'%'
+				OR publisher_rep LIKE '%'||#{keyword}||'%'
+			</if>
+			ORDER BY publisher_uid DESC) T)
+	<![CDATA[
+			WHERE RNUM >= #{fromRow} AND RNUM < #{pageRows} + #{fromRow}
+	]]>
+	</select>
+</mapper>

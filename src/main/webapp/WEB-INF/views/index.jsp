@@ -16,7 +16,7 @@
     <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
     <div class="flex-row d-flex">
         <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
-            <span class="navbar-toggler-icon"></span>
+            <span class="navbar-toggler-icon"></span>                         
         </button>
         <a class="navbar-brand" href="#" title="Free Bootstrap 4 Admin Template">YES25 서점ERP시스템</a>
     </div>
@@ -180,6 +180,7 @@
                         <table class="table table-striped">
                             <thead class="thead-inverse">
                                 <tr>
+                                <%-- 제목부분 수정  --%>
                                     <th>#</th>
                                     <th>Label</th>
                                     <th>Header</th>

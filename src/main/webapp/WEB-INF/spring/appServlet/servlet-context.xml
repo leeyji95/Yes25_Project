@@ -25,7 +25,6 @@
    
    <context:component-scan base-package="com.lec.yes25" />
    
-   
    <!-- spring-jdbc 빈 객체 생성 -->
    <!-- DataSource 객체 -->
    <beans:bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -55,5 +54,4 @@
    <beans:bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
       <beans:property name="transactionManager" ref="transactionManager"/>
    </beans:bean>
-	
 </beans:beans>

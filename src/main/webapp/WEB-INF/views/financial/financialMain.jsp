@@ -2,18 +2,44 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
 <html lang="ko">
   <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>서점ERP시스템</title>
-    <meta name="description" content="A Bootstrap 4 admin dashboard theme that will get you started. The sidebar toggles off-canvas on smaller screens. This example also include large stat blocks, modal and cards. The top navbar is controlled by a separate hamburger toggle button." />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="Codeply">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/CSS/styles.css" />
+    
+    
+    
+    
+    <!-- Latest compiled and minified CSS --> 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"> 
+	
+	<!-- jQuery library --> 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> 
+	
+	<!-- Popper JS --> 
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script> 
+	
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    
+    
+    
+    <!-- jQuery 선언 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <!-- 내 자바스크립트 -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="${pageContext.request.contextPath}/JS/financial/main.js"></script>
+    
+    
+    <!-- 내 CSS -->
+    <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath }/CSS/financial/main.css"/>
+      
+
+    
   </head>
 
 <!---------------------------------------------------------------------------------->  
@@ -29,120 +55,160 @@ function chkSubmit(){  // 폼 검증
 </script>
 <!---------------------------------------------------------------------------------->  
 
-  <body>
-    <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-primary mb-3">
-    <div class="flex-row d-flex">
-        <button type="button" class="navbar-toggler mr-2 " data-toggle="offcanvas" title="Toggle responsive left sidebar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#" title="Free Bootstrap 4 Admin Template">YES25 서점ERP시스템</a>
-    </div>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="navbar-collapse collapse" id="collapsingNavbar">
-        <ul class="navbar-nav">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Home <span class="sr-only">Home</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link">Link</a>
-            </li>
-        </ul>
-        <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#myAlert" data-toggle="collapse">Alert</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="" data-target="#myModal" data-toggle="modal">About</a>
-            </li>
-        </ul>
-    </div>
-</nav>
-<div class="container-fluid" id="main">
-    <div class="row row-offcanvas row-offcanvas-left">
-        <div class="col-md-3 col-lg-2 sidebar-offcanvas bg-light pl-0" id="sidebar" role="navigation">
-            <ul class="nav flex-column sticky-top pl-0 pt-5 mt-3">
-                <li class="nav-item"><a class="nav-link" href="#">Dashboard</a></li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#" data-toggle="collapse" data-target="#submenu1">매출</a>
-                    <ul class="list-unstyled flex-column pl-3 collapse" id="submenu1" aria-expanded="false">
-                       <li class="nav-item"><a class="nav-link" href="#">매출관리 1</a></li>
-                       <li class="nav-item"><a class="nav-link" href="#">매출관리 2</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item"><a class="nav-link" href="#">물류</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">상품</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">구매</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">인사</a></li>
-                <!-- <li class="nav-item"><a class="nav-link" href="#">Layouts</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Templates</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Themes</a></li> -->
-            </ul>
-        </div>
-        <!--/col-->
 
-        <div class="col main pt-5 mt-3">
-        
-        
+
+<body>
         
         
         
 <!-- 작업페이지 -->
+<!-- 월별 매출 그래프 -->
+<h1 class="display-4 d-none d-sm-block">월별 매출 그래프</h1>
+
+<!-- 연매출 그래프 -->
+<h1 class="display-4 d-none d-sm-block">연 매출 그래프</h1>
+
+
+
+<!-- 결제를 기다리고 있는 전표 목록 -->
+
+
+
+
+
+
+
 
 <!-- 내가 작상한 전표 목록보기 -->
 <h1 class="display-4 d-none d-sm-block">작성한 전표 목록</h1>
-<table>
-<tr>
-	<th>날짜</th>
-	<th>계정과목</th>
-	<th>적요</th>
-	<th>금액</th>
-</tr>
 
-<c:choose>
-	<c:when test="${empty list || fn.length(list) == 0 }"></c:when>
-	<c:otherwise>
-	<c:forEach var="dto" items="${list }">
-	<tr>
-		<td>${dto.date }</td>
-		<td>${dto.account_uid }</td>
-		<td>${dto.summary }</td>
-		<td>${dto.sum }</td>
-	</tr>
-	</c:forEach>
-	</c:otherwise>
-</c:choose>
-
-</table>
-<br><br><br><br><br>
+<!-- 몇개의 글 리스트가 있는지 노출 -->
 
 
-<h1 class="display-4 d-none d-sm-block">전표 입력</h1>
-<form name="frm" action="writeOk.bn" method="post" onsubmit="return chkSubmit()">
-	담당자<input><button>담당자 선택</button><br>
-	결재자<input><button>결재자 선택</button><br>
+<%-- 글목록 --%>
+<div id="list">
+	<div class="d01">
+		<div class="left" id="pageinfo"></div>
+		<div class="right" id="pageRows"></div>
+	</div>
+	
+	<div class="clear"></div>
+	
+	<form id="frmList" name="frmList">
 	
 	<table>
-	<tr>
-		<th>날짜</th>
-		<th>계정과목</th>
-		<th>적요</th>
-		<th>금액</th>
-	</tr>
-	<tr>
-		<td><input></td>
-		<td><input></td>
-		<td><input></td>
-		<td><input></td>
-	</tr>
+		<thead>
+			<th>전표번호</th>
+			<th>날짜</th>
+			<th>계정과목</th>
+			<th>적요</th>
+			<th>금액</th>
+		</thead>
+		
+		<tbody>
+		
+		</tbody>
 	</table>
 	
-	<button>증빙 파일 등록</button><br><br><br>
+	</form>
 	
-	작성자<input><br>
+	<%--버튼 --%>
+	<div class="d01">
+		<div class="left">
+			<button type="button" id="btnDel" class="btn danger">전표삭제</button>
+		</div>
+		<div class="right">
+			<button type="button" data-target="#UpdateModal" data-toggle="modal" 
+				class="btn success btn-toggle" id="btnWrite">전표수정</button>
+		</div>	
+	</div>
+</div>
+
+
+<!-- 페이징 -->
+<br><br>
+<div class="center">
+	<ul class="pagination" id="pagination"></ul>
+</div>
+
+
+<button type="button" data-toggle="modal" data-target="#WriteModal"
+	class="btn-toggle" id="btnWrite">전표입력</button>
+<button>목록보기</button>
+<button>손익계산서 확인</button>
+
+
+
+
+<br><br><br><br><br>
+<!-- 글작성 모달창 -->
+<div id="WriteModal" class="modal fade bs-example-modal-lg" 
+	data-backdrop="static" data-keyboard="false" role="dialog" 
+	tabindex="-1" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 	
-	<button type="submit">등록</button>
-</form>
+	<!-- Modal content-->
+	<div class="modal-dialog modal-lg">
+	<div class="modal-content">
+	
+	<!-- Modal 헤더 -->
+	<div class="modal-header ">전표입력</div>
+	
+	<form id="frmWrite" name="frmWrite" method="post">
+		<!-- Modal 텍스트 문구 -->
+		<div class= "modal-body">
+				<label for="manager">담당자</label>
+				<input type="number" name="manager" required><button>담당자 선택</button>
+				&nbsp;&nbsp;&nbsp;>&nbsp;
+				<label for="approver">결재자</label>
+				<input type="number" name="approver" required><button>결재자 선택</button><br>
+
+				<br><br><br>
+				<table>
+					<tr>
+						<th><label for="regDate">날짜</label></th>
+						<th><label for="account_uid">계정과목</label></th>
+						<th><label for="summary">적요</label></th>
+						<th><label for="money">금액</label></th>
+					</tr>
+					
+					<tr>
+						<td>
+							<input type="text" name="regDate" required>
+						</td>
+						<td>
+							<input type="number" name="account_uid" required>
+						</td>
+						<td>
+							<input type="text" name="summary" required>
+						</td>
+						<td>
+							<input type="number" name="money" required>
+						</td>
+					</tr>
+				</table>
+				 
+				<button>증빙 파일 등록</button><br><br><br>
+				
+				
+				<label for="writer">작성자</label>
+				<input type="number" name="writer" required><br>
+		</div>
+		
+		<!-- Modal 푸터 -->
+		<footer class="modal-footer">
+		  <!-- btn-dismiss 모달 닫는 버튼, data-dismiss="modal" -->
+		  <button class="btn-dismiss" type="button" data-dismiss="modal">취소</button>
+		  
+		  <button data-toggle = "modal" type="submit">등록</button>
+		</footer>
+	</form>
+	</div>
+	</div>
+</div>
+
+
+
+
+
 </body>
 </html>
