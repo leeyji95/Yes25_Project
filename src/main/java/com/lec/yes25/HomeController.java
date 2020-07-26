@@ -55,11 +55,10 @@ public class HomeController {
 	public String left() {		 
 		return "left_menu";
 	}
-<<<<<<< HEAD
-=======
+
 	@RequestMapping(value="/login") 
 	public String login() {		 
 		return "personnel/login";
 	}
->>>>>>> branch 'master' of https://github.com/leeyji95/Yes25_Project.git
+
 }

@@ -16,6 +16,7 @@
 <link rel="stylesheet"
 	href="${pageContext.request.contextPath}/CSS/styles.css" />
 <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
 	<div class="container-fluid" id="main">
@@ -45,8 +46,7 @@
 					<!-- #2 : Modal Window -->
 					<div v-show="is_show">
 						<%--글작성/보기/수정 대화상자 --%>
-						<form class="" id="frmWrite" name="frmWrite" action='ajax/insert.ajax'
-							method="post">
+						<form @submit.prevent="submitForm">
 							<div class="container">
 								<h3 class="title">도서 등록</h3>
 
@@ -65,16 +65,16 @@
 								</div>
 
 								<label for="subject"><b>도서제목</b></label> 
-								<input type="text" name="subject" required> 
+								<input type="text" id="subject" v-model="subject" required> 
 								
 								<label for="price"><b>도서가격</b></label> 
-								<input type="text" name="price">
+								<input type="text" id="price" v-model="price">
 								
 								<label for="author"><b>저자</b></label>
-								<input type="text" name="author" required> 
+								<input type="text" id="author" v-model="author" required> 
 								
 								<label for="content"><b>도서내용</b></label>
-								<textarea name="content"></textarea>
+								<textarea id="content" v-model="content"></textarea>
 								
 								<div class="d01 btn_group_write">
 									<input type="submit" class="" value="등록">
@@ -87,17 +87,33 @@
 
 				</div>
 				<script>
-new Vue({
+var modal = new Vue({
   el: '#app',
-  data: () => { // #1
+  data: function() { // #1
     return {
-      is_show: false 
+      is_show: false,
+      
+    },
+    {
+    	subject: '',
+        price: '200',
+        author: '',
+        content: ''  
     }
   },
   methods:{
     handle_toggle: function(){ 
       this.is_show = !this.is_show; // #2, #3
     },
+    submitForm: function(){	    	
+    	axios.post(`ajax/insert.ajax`, {
+    		"subject" : this.subject,
+    		"price" : this.price,
+    		"author" : this.author,
+    		"content" : this.content,
+    	}) 
+    	.catch( error => { console.log('failed', error) })
+    }
   }
 });
 </script>
@@ -132,7 +148,7 @@ new Vue({
 						posts: []
 					},
 					created(){
-						fetch('http://localhost:8000/yes25_project/products/ajax/list.ajax')
+						fetch('http://localhost:8109/yes25_project/products/ajax/list.ajax')
 							.then((response) => {
 								if(response.ok){
 									return response.json();

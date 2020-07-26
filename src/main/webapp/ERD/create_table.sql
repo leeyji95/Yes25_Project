@@ -8,10 +8,7 @@ DROP TABLE tb_emp CASCADE CONSTRAINT purge;
 DROP TABLE tb_position CASCADE CONSTRAINT purge;
 DROP TABLE tb_commute CASCADE CONSTRAINT purge;
 DROP TABLE tb_apply CASCADE CONSTRAINT purge;
-<<<<<<< HEAD
-=======
 DROP TABLE tb_password CASCADE CONSTRAINT purge;
->>>>>>> branch 'master' of https://github.com/leeyji95/Yes25_Project.git
 
 DROP TABLE tb_publisher CASCADE CONSTRAINT purge;
 DROP TABLE tb_book CASCADE CONSTRAINT purge;
@@ -53,6 +50,7 @@ CREATE SEQUENCE emp_seq;
 
 CREATE SEQUENCE publisher_seq;
 CREATE SEQUENCE book_seq;
+CREATE SEQUENCE attach_seq;
 CREATE SEQUENCE category_seq;
 
 CREATE SEQUENCE order_seq;
@@ -260,7 +258,7 @@ CREATE TABLE tb_attach
     attach_oriname       VARCHAR2(200)    NOT NULL, 
     attach_servername    VARCHAR2(200)    NOT NULL, 
     attach_type          VARCHAR2(200)    NOT NULL, 
-    attach_uri           VARCHAR2(200)    NOT NULL, 
+    attach_uri           VARCHAR2(200)    NULL, 
     attach_regdate       DATE             DEFAULT SYSDATE NOT NULL, 
     attach_size          NUMBER           NOT NULL, 
     book_uid             NUMBER           NULL, 

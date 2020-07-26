@@ -4,29 +4,39 @@
 
 <select id="select" resultType="com.lec.yes25.product.dto.BookDTO">
 	SELECT 
-		BOOK_UID bookUid, BOOK_SUBJECT subject, BOOK_AUTHOR author, BOOK_CONTENT content, BOOK_PRICE price, BOOK_PUBDATE pubdate, BOOK_REGDATE regdate, BOOK_ISBN isbn, CATEGORY_UID categoryUid, PUBLISHER_UID pubUid 
-	FROM tb_book 
-	ORDER BY BOOK_UID DESC
+		bookUid, subject, author, content, price, pubdate, regdate, isbn, categoryUid, pubUid 
+	FROM view_book
+</select>
+
+<select id="selectByUid" resultType="com.lec.yes25.product.dto.BookDTO">
+	SELECT 
+		bookUid, subject, author, content, price, pubdate, regdate, isbn, categoryUid, pubUid 
+	FROM view_book 
+	WHERE bookUid = #{param1}
 </select>
 
 <insert id="insert" flushCache="true"
-	parameterType="com.lec.yes25.product.dto.BookDTO">
+	parameterType="com.lec.yes25.product.dto.BookDTO" useGeneratedKeys="true">
 	INSERT INTO TB_BOOK 
 	(BOOK_UID, BOOK_SUBJECT, BOOK_AUTHOR, BOOK_CONTENT, BOOK_PRICE, BOOK_PUBDATE, BOOK_REGDATE, BOOK_ISBN, CATEGORY_UID, PUBLISHER_UID) 
 	VALUES
 	(book_seq.nextval, #{subject}, #{author}, #{content}, #{price}, SYSDATE, SYSDATE, #{isbn}, #{categoryUid}, #{pubUid})
+	<selectKey keyProperty="bookUid" resultType="Integer" order="AFTER">
+		SELECT book_seq.currval FROM dual
+	</selectKey>
 </insert>
 
 <delete id="deleteByUid" flushCache="true">
 DELETE FROM TB_BOOK WHERE BOOK_UID = #{param1}
 </delete>
 
-<update id="update" flushCache="true">
+<update id="update" flushCache="true"
+	parameterType="com.lec.yes25.product.dto.BookDTO">
 UPDATE TB_BOOK 
 SET 
-	BOOK_SUBJECT = #{a.subject}, BOOK_AUTHOR = #{a.author}, BOOK_CONTENT = #{a.content}, BOOK_PRICE = #{a.price},
-	BOOK_PUBDATE = #{a.pubdate}, BOOK_ISBN = #{a.isbn}, CATEGORY_UID = #{a.categoryUid}, PUBLISHER_UID = #{a.pubUid} 
-WHERE BOOK_UID = #{param1}
+	BOOK_SUBJECT = #{subject}, BOOK_AUTHOR = #{author}, BOOK_CONTENT = #{content}, BOOK_PRICE = #{price},
+	BOOK_ISBN = #{isbn}, CATEGORY_UID = #{categoryUid}, PUBLISHER_UID = #{pubUid} 
+WHERE BOOK_UID = #{bookUid}
 </update>
 
 </mapper>

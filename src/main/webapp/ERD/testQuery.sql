@@ -2,8 +2,27 @@ SELECT * FROM tab;
 SELECT * FROM tb_book;
 SELECT * FROM tb_category;
 SELECT * FROM tb_publisher;
+SELECT * FROM TB_ATTACH;
 
-DELETE FROM TB_BOOK tb WHERE BOOK_UID = 4;
+UPDATE TB_ATTACH SET BOOK_UID = 8 WHERE ATTACH_UID = 11;
+
+CREATE OR REPLACE VIEW view_book AS
+SELECT 
+		tbk.BOOK_UID bookUid, tbk.BOOK_SUBJECT subject, tbk.BOOK_AUTHOR author, 
+		tbk.BOOK_CONTENT content, tbk.BOOK_PRICE price, tbk.BOOK_PUBDATE pubdate, tbk.BOOK_REGDATE regdate, 
+		tbk.BOOK_ISBN isbn, tbk.CATEGORY_UID categoryUid, tbk.PUBLISHER_UID pubUid,
+		tpb.PUBLISHER_NAME pubName, tct.CATEGORY_NAME categoryName,
+		tat.ATTACH_SERVERNAME serName, tat.ATTACH_URI uri
+	FROM tb_book tbk
+	LEFT OUTER JOIN TB_PUBLISHER tpb 
+	ON tbk.PUBLISHER_UID = tpb.PUBLISHER_UID 
+	LEFT OUTER JOIN TB_CATEGORY tct 
+	ON tbk.CATEGORY_UID = tct.CATEGORY_UID 
+	LEFT OUTER JOIN TB_ATTACH tat
+	ON tbk.BOOK_UID = tat.BOOK_UID 
+	ORDER BY tbk.BOOK_UID DESC;
+
+SELECT * FROM view_book;	
 
 UPDATE TB_BOOK 
 SET 
@@ -52,4 +71,4 @@ VALUES
 INSERT INTO TB_BOOK 
 	(BOOK_UID, BOOK_SUBJECT, BOOK_AUTHOR, BOOK_CONTENT, BOOK_PUBDATE, BOOK_REGDATE, BOOK_ISBN, CATEGORY_UID, PUBLISHER_UID) 
 VALUES
-	(book_seq.nextval, 'C를 배워보자', '고슬링', 'C를 배워봅시다', SYSDATE, SYSDATE, '12435', 3, 1);
+	(book_seq.nextval, 'C를 배워보자', '고슬링', 'C를 배워봅시다', SYSDATE, SYSDATE, '12435', 1, 1);

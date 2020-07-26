@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.yes25.product.mapper.AttachDAO">
+
+<insert id="insert" flushCache="true"
+	parameterType="com.lec.yes25.product.dto.AttachDTO">
+	INSERT INTO TB_ATTACH 
+	(ATTACH_UID, ATTACH_ORINAME, ATTACH_SERVERNAME, ATTACH_TYPE, ATTACH_URI, ATTACH_REGDATE, ATTACH_SIZE, BOOK_UID) 
+	VALUES
+	(attach_seq.nextval, #{oriName}, #{serName}, #{fileType}, #{uri}, SYSDATE, #{fileSize}, #{bookUid})
+</insert>
+
+
+
+</mapper>
