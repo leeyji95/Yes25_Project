@@ -10,7 +10,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/list")
 	public String list() {
-		return "/products/list";
+		return "/products/bookList";
 	}
 	@RequestMapping(value="/form")
 	public String form() {

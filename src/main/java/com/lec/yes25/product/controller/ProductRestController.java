@@ -53,7 +53,8 @@ public class ProductRestController {
 	}
 	
 	@RequestMapping("/upload.ajax")
-	public String upload(@RequestParam("file") MultipartFile file, HttpSession session) {
+	public String upload(@RequestParam("file") MultipartFile file, HttpSession session, @RequestParam("bookuid") int bookUid) {
+		
 		String originalFileName = file.getOriginalFilename();
 		String storageName = UUID.randomUUID().toString() + "_" + originalFileName;
 		int fileSize = (int)file.getSize();
@@ -93,7 +94,7 @@ public class ProductRestController {
             throw new RuntimeException("file Save Error");
         }
         
-        AttachDTO dto = new AttachDTO(originalFileName, storageName, fileType, filePath, fileSize);        
+        AttachDTO dto = new AttachDTO(originalFileName, storageName, fileType, filePath, fileSize, bookUid);        
         AttachDAO dao = C.sqlSession.getMapper(AttachDAO.class);
 		dao.insert(dto);
         

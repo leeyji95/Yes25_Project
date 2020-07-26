@@ -13,8 +13,12 @@ public class BookDTO {
 	private Date regdate;
 	private int isbn;
 	private int categoryUid;
+	private String categoryName;
 	private int pubUid;
+	private String pubName;
 	private int attachUid;
+	private String serName;
+	private String uri;
 	
 	public BookDTO() {}
 	
@@ -102,7 +106,40 @@ public class BookDTO {
 	public void setAttachUid(int attachUid) {
 		this.attachUid = attachUid;
 	}
-	
+
+	public String getSerName() {
+		return "http://localhost:8109/yes25_project/upload/book/" + serName;
+	}
+
+	public void setSerName(String serName) {
+		this.serName = serName;
+	}
+
+	public String getUri() {
+		return uri;
+	}
+
+	public void setUri(String uri) {
+		this.uri = uri;
+	}
+
+	public String getCategoryName() {
+		return categoryName;
+	}
+
+	public void setCategoryName(String categoryName) {
+		this.categoryName = categoryName;
+	}
+
+
+	public String getPubName() {
+		return pubName;
+	}
+
+
+	public void setPubName(String pubName) {
+		this.pubName = pubName;
+	}
 	
 	
 

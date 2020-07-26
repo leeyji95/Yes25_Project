@@ -15,13 +15,14 @@ public class AttachDTO {
 	
 	public AttachDTO() {}	
 
-	public AttachDTO(String oriName, String serName, String fileType, String uri, int fileSize) {
+	public AttachDTO(String oriName, String serName, String fileType, String uri, int fileSize, int bookUid) {
 		super();
 		this.oriName = oriName;
 		this.serName = serName;
 		this.fileType = fileType;
 		this.uri = uri;
 		this.fileSize = fileSize;
+		this.bookUid = bookUid;
 	}
 
 
