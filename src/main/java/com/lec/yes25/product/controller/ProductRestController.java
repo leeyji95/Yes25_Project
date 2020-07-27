@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.lec.common.C;
+import com.lec.yes25.product.dto.AjaxListResult;
 import com.lec.yes25.product.dto.AttachDTO;
 import com.lec.yes25.product.dto.BookDTO;
 import com.lec.yes25.product.mapper.AttachDAO;
@@ -37,11 +38,13 @@ public class ProductRestController {
 
 
 	@RequestMapping("/list.ajax")
-	public List<BookDTO> list() {
+	public AjaxListResult<BookDTO> list() {
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		List<BookDTO> bookList = dao.select();
+		AjaxListResult<BookDTO> result = new AjaxListResult<>();
+		result.setData(bookList);
 		
-		return bookList;
+		return result;
 	}
 	
 	@RequestMapping("/insert.ajax")

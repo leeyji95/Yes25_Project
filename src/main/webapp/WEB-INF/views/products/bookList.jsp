@@ -14,54 +14,155 @@
 <body>
     <div class="container">
         <div id="app">
+
+
+            <div class="input-group mb-3">
+                <div class="form-group input-group-prepend">
+                    <select class="form-control">
+                        <option>제목</option>
+                        <option>내용</option>
+                        <option>저자</option>
+                        <option>출판사</option>
+                    </select>
+                </div>
+                <input type="text" class="form-control" placeholder="Search">
+                <div class="input-group-append">
+                    <button class="btn btn-success form-control" type="submit">Go</button>
+                </div>
+            </div>
+
+
             <table class="table table-hover">
                 <tr v-for="post in posts" :key="post.bookUid">
                     <td style="display: none;">{{post.bookUid}}</td>
-                    <td>사진</td>
-                    <td>
+                    <td style="height: 200px; width: 24.99%;">
+                        <img class="img-thumbnail mx-auto d-block" v-if="post.serName" :src="post.serName"
+                            style="max-height: 100%;">
+                    </td>
+                    <td style="width: 50%;">
                         <p>[{{post.categoryName}}] {{post.subject}}</p>
                         <p>{{post.author}} / {{post.pubName}}</p>
                         <p>{{post.price}}</p>
                     </td>
-                    <td><a @click.prevent="deleteItem">삭제</a></td>
+                    <td style="width: 24.99%;"><a @click.prevent="deleteItem">삭제</a></td>
                 </tr>
             </table>
             <div class="row">
                 <div class="col-10"></div>
                 <div class="col-2">
-                    <button class="btn btn-primary">등록</button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">등록</button>
                 </div>
 
             </div>
 
-
-            <!-- Button to Open the Modal -->
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-                Open modal
-            </button>
+            <ul class="pagination justify-content-center" style="margin:20px 0">
+                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+            </ul>
 
             <!-- The Modal -->
             <div class="modal" id="myModal">
                 <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
+                    <form @submit.prevent="submitForm">
+                        <div class="modal-content">
 
-                        <!-- Modal Header -->
-                        <div class="modal-header">
-                            <h4 class="modal-title">Modal Heading</h4>
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">도서등록</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="card" style="height: 200px;" @dragover.prevent @dragenter.prevent
+                                            @drop.prevent="onDrop">
+                                            <img class="img-thumbnail mx-auto d-block" v-if="url" :src="url"
+                                                style="max-height: 100%;">
+                                            <div class="card-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="subject">제목</label>
+                                            <input :value="subject" @input="subject=$event.target.value"
+                                                class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="author">저자</label>
+                                            <input :value="author" @input="author=$event.target.value"
+                                                class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="file" @change="onFileChange" accept="image/*" ref="myFileInput">
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="price">정가</label>
+                                            <input v-model.number.trim="price" @input="maxLengthCheck"
+                                                class="form-control" type="number">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-4">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="categoryUid">카테고리</label>
+                                            <input v-model.number.trim="categoryUid" class="form-control">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="pubUid">출판사</label>
+                                            <input v-model.number.trim="pubUid" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p>내용</p>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <textarea :value="content" @input="content=$event.target.value"
+                                                class="form-control"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                <button type="button" @click="clearForm" class="btn btn-primary">초기화</button>
+                                <button type="submit" class="btn btn-primary">등록</button>
+                            </div>
+
                         </div>
-
-                        <!-- Modal body -->
-                        <div class="modal-body">
-                            Modal body..
-                        </div>
-
-                        <!-- Modal footer -->
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                        </div>
-
-                    </div>
+                    </form>
                 </div>
             </div>
 
