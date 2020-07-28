@@ -38,10 +38,15 @@ public class ProductRestController {
 
 
 	@RequestMapping("/list.ajax")
-	public AjaxListResult<BookDTO> list() {
+	public AjaxListResult<BookDTO> list(@RequestParam int page, @RequestParam int pageRows) {
+		System.out.println(page);
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
-		List<BookDTO> bookList = dao.select();
+		
+		int count = dao.selectCount();	
+		List<BookDTO> bookList = dao.select(page, pageRows);
+		
 		AjaxListResult<BookDTO> result = new AjaxListResult<>();
+		result.setCount(count);
 		result.setData(bookList);
 		
 		return result;
@@ -121,7 +126,8 @@ public class ProductRestController {
 	public void update(@RequestBody BookDTO dto) {	
 		
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
-		dao.update(dto);		
+		dao.update(dto);
+		System.out.println("업데이트 성공");
 	}
 	
 	@RequestMapping("/delete.ajax")
@@ -135,14 +141,18 @@ public class ProductRestController {
 	}
 	
 	@RequestMapping("/view.ajax")
-	public List<BookDTO> view(@RequestBody BookDTO dto) {
+	public AjaxListResult<BookDTO> view(@RequestBody BookDTO dto) {
 		
 		int bookUid = dto.getBookUid();
 		
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		List<BookDTO> bookList = dao.selectByUid(bookUid);
 		
-		return bookList;		
+		AjaxListResult<BookDTO> result = new AjaxListResult<>();
+		result.setData(bookList);
+		result.setCount(1);
+		
+		return result;		
 		
 	}
 	

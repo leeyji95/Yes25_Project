@@ -13,8 +13,7 @@
 
 <body>
     <div class="container">
-        <div id="app">
-
+        <div id="app">            
 
             <div class="input-group mb-3">
                 <div class="form-group input-group-prepend">
@@ -31,6 +30,8 @@
                 </div>
             </div>
 
+            <p>총 {{count}}건</p>
+            <p><a href="#" @click.prevent="changeRows">10개씩 보기</a></p>
 
             <table class="table table-hover">
                 <tr v-for="post in posts" :key="post.bookUid">
@@ -40,7 +41,7 @@
                             style="max-height: 100%;">
                     </td>
                     <td style="width: 50%;">
-                        <p>[{{post.categoryName}}] {{post.subject}}</p>
+                        <p>[{{post.categoryName}}] <a href="#" @click="viewItem" data-toggle="modal" data-target="#viewModal">{{post.subject}}</a></p>
                         <p>{{post.author}} / {{post.pubName}}</p>
                         <p>{{post.price}}</p>
                     </td>
@@ -56,13 +57,11 @@
             </div>
 
             <ul class="pagination justify-content-center" style="margin:20px 0">
-                <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
-                <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="#">4</a></li>
-                <li class="page-item"><a class="page-link" href="#">5</a></li>
-                <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item" :class="{disabled : startPage == 1}"><a class="page-link" href="#" @click.prevent="prevPage">Previous</a></li>                
+                <li class="page-item" v-for="(n, index) in writePages" :class="{active : page == n + startPage - 1, disabled : n + startPage - 1 > endPage}">
+                    <a class="page-link" href="#" @click.prevent="curPage">{{n + startPage - 1}}</a>
+                </li>
+                <li class="page-item" :class="{disabled : startPage > endPage - writePages}"><a class="page-link" href="#" @click.prevent="nextPage">Next</a></li>
             </ul>
 
             <!-- The Modal -->
@@ -159,6 +158,107 @@
                                 <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
                                 <button type="button" @click="clearForm" class="btn btn-primary">초기화</button>
                                 <button type="submit" class="btn btn-primary">등록</button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+             <!-- The ViewModal -->
+             <div class="modal" id="viewModal">
+                <div class="modal-dialog modal-lg">
+                    <form @submit.prevent="submitForm">
+                        <div class="modal-content">
+
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">도서정보</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+
+                            <!-- Modal body -->
+
+                            <div class="modal-body">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <div class="card" style="height: 200px;" @dragover.prevent @dragenter.prevent
+                                            @drop.prevent="onDrop">
+                                            <img class="img-thumbnail mx-auto d-block" v-if="url" :src="url"
+                                                style="max-height: 100%;">
+                                            <div class="card-body">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="subject">제목</label>
+                                            <input :value="subject" @input="subject=$event.target.value"
+                                                class="form-control" :readonly="!isEditable">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="author">저자</label>
+                                            <input :value="author" @input="author=$event.target.value"
+                                                class="form-control" :readonly="!isEditable">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-4">
+                                        <input type="file" @change="onFileChange" accept="image/*" ref="myFileInput" :disabled="!isEditable">
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="price">정가</label>
+                                            <input v-model.number.trim="price" @input="maxLengthCheck"
+                                                class="form-control" type="number" :readonly="!isEditable">
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-4">
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="categoryUid">카테고리</label>
+                                            <input v-model.number.trim="categoryUid" class="form-control" :readonly="!isEditable">
+                                        </div>
+
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="form-group">
+                                            <label for="pubUid">출판사</label>
+                                            <input v-model.number.trim="pubUid" class="form-control" :readonly="!isEditable">
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-4">
+                                        <p>내용</p>
+                                    </div>
+                                    <div class="col-8">
+                                        <div class="form-group">
+                                            <textarea :value="content" @input="content=$event.target.value"
+                                                class="form-control" :readonly="!isEditable"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Modal footer -->
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">취소</button>
+                                <button type="button" @click="editMode" class="btn btn-primary" :disabled="isEditable">수정</button>
+                                <button type="submit" @click.prevent="updateItem" class="btn btn-primary" :disabled="!isEditable">완료</button>
                             </div>
 
                         </div>

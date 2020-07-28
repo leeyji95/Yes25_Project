@@ -3,16 +3,24 @@
 <mapper namespace="com.lec.yes25.product.mapper.ProductDAO">
 
 <select id="select" resultType="com.lec.yes25.product.dto.BookDTO">
-	SELECT 
-		bookUid, subject, author, content, price, pubdate, regdate, isbn, categoryUid, categoryName, pubUid, pubName, serName, uri
-	FROM view_book
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb)
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
 </select>
 
 <select id="selectByUid" resultType="com.lec.yes25.product.dto.BookDTO">
 	SELECT 
-		bookUid, subject, author, content, price, pubdate, regdate, isbn, categoryUid, pubUid 
+		* 
 	FROM view_book 
 	WHERE bookUid = #{param1}
+</select>
+
+<select id="selectCount" resultType="int">
+	SELECT count(*) FROM TB_BOOK
 </select>
 
 <insert id="insert" flushCache="true"

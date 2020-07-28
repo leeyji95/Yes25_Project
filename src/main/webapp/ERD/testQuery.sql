@@ -7,7 +7,7 @@ SELECT * FROM TB_ATTACH;
 UPDATE TB_ATTACH SET BOOK_UID = 8 WHERE ATTACH_UID = 11;
 
 CREATE OR REPLACE VIEW view_book AS
-SELECT 
+SELECT  
 		tbk.BOOK_UID bookUid, tbk.BOOK_SUBJECT subject, tbk.BOOK_AUTHOR author, 
 		tbk.BOOK_CONTENT content, tbk.BOOK_PRICE price, tbk.BOOK_PUBDATE pubdate, tbk.BOOK_REGDATE regdate, 
 		tbk.BOOK_ISBN isbn, tbk.CATEGORY_UID categoryUid, tbk.PUBLISHER_UID pubUid,
@@ -23,6 +23,16 @@ SELECT
 	ORDER BY tbk.BOOK_UID DESC;
 
 SELECT * FROM view_book;	
+
+
+SELECT *
+FROM 
+(SELECT rownum AS rnum, vb.* 
+FROM VIEW_BOOK vb)
+WHERE RNUM >= 1 AND RNUM < 1 + 5
+;
+
+SELECT count(*) FROM TB_BOOK;
 
 UPDATE TB_BOOK 
 SET 
