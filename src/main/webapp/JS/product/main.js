@@ -3,9 +3,12 @@
  */
 let app = new Vue({
     el: '#app',
+    vuetify: new Vuetify(),
     data: {
         posts: [],
+        categories: [],
         file: null,
+        category: '',
         url: '',
         subject: '',
         author: '',
@@ -23,6 +26,7 @@ let app = new Vue({
     },
     created() {
         this.getList();
+        this.getCategory();
     },
     methods: {
         getList: function () {
@@ -47,6 +51,29 @@ let app = new Vue({
                 .catch(error => {
                     console.log('리스트 가져오기 실패', error)
                 });
+
+        },
+        getCategory: function(){  
+            console.log('카테고리 가져오기 시작');     
+            axios.post(`http://localhost:8109/yes25_project/products/ajax/categoryList.ajax`
+                )
+                .then((result) => {
+                    console.log('카테고리 가져오기 성공');
+                    console.log(result);
+                    console.log(result.data.data);
+
+                    this.categories = result.data.data;
+                })
+                .catch(error => {
+                    console.log('카테고리 가져오기 실패', error)
+                });
+
+        },
+        cateChange: function(e){
+            console.log(e.target.dataset.parent);
+            console.log(e.target.value);
+
+
 
         },
         curPage: function (e) {
@@ -115,6 +142,7 @@ let app = new Vue({
 
         },
         submitForm: function () {
+            console.log(this.category);
             axios.post(`http://localhost:8109/yes25_project/products/ajax/insert.ajax`, {
                     "subject": this.subject,
                     "author": this.author,

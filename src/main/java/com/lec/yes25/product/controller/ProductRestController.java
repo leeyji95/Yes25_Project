@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Locale.Category;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -20,7 +21,9 @@ import com.lec.common.C;
 import com.lec.yes25.product.dto.AjaxListResult;
 import com.lec.yes25.product.dto.AttachDTO;
 import com.lec.yes25.product.dto.BookDTO;
+import com.lec.yes25.product.dto.CategoryDTO;
 import com.lec.yes25.product.mapper.AttachDAO;
+import com.lec.yes25.product.mapper.CategoryDAO;
 import com.lec.yes25.product.mapper.ProductDAO;
 
 @RestController
@@ -48,6 +51,19 @@ public class ProductRestController {
 		AjaxListResult<BookDTO> result = new AjaxListResult<>();
 		result.setCount(count);
 		result.setData(bookList);
+		
+		return result;
+	}
+	
+	@RequestMapping("/categoryList.ajax")
+	public AjaxListResult<CategoryDTO> categoryList() {
+		CategoryDAO dao = C.sqlSession.getMapper(CategoryDAO.class);
+		
+		List<CategoryDTO> list = dao.select();
+		
+		AjaxListResult<CategoryDTO> result = new AjaxListResult<>();
+		result.setCount(list.size());
+		result.setData(list);
 		
 		return result;
 	}

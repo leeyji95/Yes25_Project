@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.yes25.product.mapper.CategoryDAO">
+
+<select id="select" resultType="com.lec.yes25.product.dto.CategoryDTO">	
+	SELECT ROOT_UID rootUid, ROOT_NAME rootName,
+	DOWN1_UID down1Uid, DOWN1_NAME down1Name,
+	DOWN2_UID down2Uid, DOWN2_NAME down2Name
+	FROM view_category
+</select>
+
+</mapper>
