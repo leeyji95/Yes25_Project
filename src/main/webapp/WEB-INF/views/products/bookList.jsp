@@ -148,13 +148,11 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="pubUid">출판사</label>
-                                                <input v-model.number.trim="pubUid" class="form-control" list="pubList">
-                                                <datalist id="pubList">
-                                                    <option value="1"></option>
-                                                    <option value="2"></option>
-                                                    <option value="3"></option>
-                                                    <option value="4"></option>
-                                                </datalist>
+                                                <v-autocomplete v-model="pubUid" :items="publishers" 
+                                                    item-text="pubName"
+                                                    :debounce-search="0" item-value="pubUid"
+                                                    clearable>                                                    
+                                                </v-autocomplete>
                                             </div>
                                         </div>
                                     </div>
@@ -249,21 +247,22 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="categoryUid">카테고리</label>
-                                                <select v-model="categoryUid" class="form-control"
-                                                    :disabled="!isEditable">
-                                                    <option disabled value="">Please select one</option>
-                                                    <option v-for="category in categories"
-                                                        v-bind:value="category.down2Uid">
-                                                        {{ category.rootName }}/{{ category.down1Name }}/{{ category.down2Name }}
-                                                    </option>
-                                                </select>
+                                                <v-autocomplete v-model="categoryUid" :items="categories" 
+                                                    :item-text="item => item.rootName + '/' + item.down1Name + '/' + item.down2Name"
+                                                    :debounce-search="0" item-value="down2Uid"
+                                                    clearable :disabled="!isEditable">
+                                                    
+                                                </v-autocomplete>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="pubUid">출판사</label>
-                                                <input v-model.number.trim="pubUid" class="form-control"
-                                                    :readonly="!isEditable">
+                                                <v-autocomplete v-model="pubUid" :items="publishers" 
+                                                    item-text="pubName"
+                                                    :debounce-search="0" item-value="pubUid"
+                                                    clearable :disabled="!isEditable">                                                    
+                                                </v-autocomplete>
                                             </div>
                                         </div>
                                     </div>

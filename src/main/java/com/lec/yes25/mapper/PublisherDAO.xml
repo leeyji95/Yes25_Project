@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lec.yes25.product.mapper.PublisherDAO">
+
+<select id="select" resultType="com.lec.yes25.product.dto.PublisherDTO">	
+	SELECT PUBLISHER_UID pubUid, PUBLISHER_NAME pubName, 
+	PUBLISHER_NUM pubNum, PUBLISHER_REP pubRep, 
+	PUBLISHER_CONTACT pubContact, PUBLISHER_ADDRESS pubAddress 
+	FROM TB_PUBLISHER
+</select>
+
+</mapper>

@@ -10,6 +10,18 @@
 	(attach_seq.nextval, #{oriName}, #{serName}, #{fileType}, #{uri}, SYSDATE, #{fileSize}, #{bookUid})
 </insert>
 
+<select id="selectByBookUid" resultType="com.lec.yes25.product.dto.AttachDTO">
+	<![CDATA[
+	SELECT ATTACH_SERVERNAME serName, ATTACH_URI uri 
+	FROM TB_ATTACH
+	WHERE BOOK_UID = #{param1}
+	]]>
+</select>
+
+<delete id="deleteByBookUid" flushCache="true">
+DELETE FROM TB_ATTACH WHERE BOOK_UID = #{param1}
+</delete>
+
 
 
 </mapper>

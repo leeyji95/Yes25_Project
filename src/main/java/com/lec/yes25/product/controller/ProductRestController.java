@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.util.List;
-import java.util.Locale.Category;
 import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
@@ -22,108 +21,119 @@ import com.lec.yes25.product.dto.AjaxListResult;
 import com.lec.yes25.product.dto.AttachDTO;
 import com.lec.yes25.product.dto.BookDTO;
 import com.lec.yes25.product.dto.CategoryDTO;
+import com.lec.yes25.product.dto.PublisherDTO;
 import com.lec.yes25.product.mapper.AttachDAO;
 import com.lec.yes25.product.mapper.CategoryDAO;
 import com.lec.yes25.product.mapper.ProductDAO;
+import com.lec.yes25.product.mapper.PublisherDAO;
 
 @RestController
 @RequestMapping("/products/ajax")
 public class ProductRestController {
-	
+
 	private SqlSession sqlSession;
-	
+
 	@Autowired
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 		C.sqlSession = sqlSession;
 	}
 
-
-
 	@RequestMapping("/list.ajax")
 	public AjaxListResult<BookDTO> list(@RequestParam int page, @RequestParam int pageRows) {
 		System.out.println(page);
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
-		
-		int count = dao.selectCount();	
+
+		int count = dao.selectCount();
 		List<BookDTO> bookList = dao.select(page, pageRows);
-		
+
 		AjaxListResult<BookDTO> result = new AjaxListResult<>();
 		result.setCount(count);
 		result.setData(bookList);
-		
+
 		return result;
 	}
-	
+
 	@RequestMapping("/categoryList.ajax")
 	public AjaxListResult<CategoryDTO> categoryList() {
 		CategoryDAO dao = C.sqlSession.getMapper(CategoryDAO.class);
-		
+
 		List<CategoryDTO> list = dao.select();
-		
+
 		AjaxListResult<CategoryDTO> result = new AjaxListResult<>();
 		result.setCount(list.size());
 		result.setData(list);
-		
+
 		return result;
 	}
-	
+
+	@RequestMapping("/publisherList.ajax")
+	public AjaxListResult<PublisherDTO> pubList() {
+		PublisherDAO dao = C.sqlSession.getMapper(PublisherDAO.class);
+
+		List<PublisherDTO> list = dao.select();
+
+		AjaxListResult<PublisherDTO> result = new AjaxListResult<>();
+		result.setCount(list.size());
+		result.setData(list);
+
+		return result;
+	}
+
 	@RequestMapping("/insert.ajax")
 	public int insert(@RequestBody BookDTO dto) {
-		
+
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		dao.insert(dto);
-		return dto.getBookUid();		
+		return dto.getBookUid();
 	}
-	
+
 	@RequestMapping("/upload.ajax")
-	public String upload(@RequestParam("file") MultipartFile file, HttpSession session, @RequestParam("bookuid") int bookUid) {
-		
+	public String upload(@RequestParam("file") MultipartFile file, HttpSession session,
+			@RequestParam("bookuid") int bookUid) {
+
 		String originalFileName = file.getOriginalFilename();
 		String storageName = UUID.randomUUID().toString() + "_" + originalFileName;
-		int fileSize = (int)file.getSize();
+		int fileSize = (int) file.getSize();
 		String fileType = file.getContentType();
 		String filePath = session.getServletContext().getRealPath("upload/book") + File.separator;
-		
+
 		System.out.println("원본이름: " + originalFileName);
 		System.out.println("저장이름: " + storageName);
 		System.out.println("파일 크기: " + fileSize);
 		System.out.println("파일 타입: " + fileType);
 		System.out.println("저장경로: " + filePath);
-		
-		
-		
+
 		// 데이터 베이스에 정보를 저장하는 건
-        // 이렇게 file의 get 메소드를 활용해 필요한 정보들을 가져오고 
-        // 그걸 DTO에 담아 insert하면 된다. 
-        // 간단한거니 후의 과정은 생략하고 파일로 서버에 저장하는 걸 보자면 
-        try (
-                FileOutputStream fos = new FileOutputStream(filePath + storageName);
-                // 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
-                InputStream is = file.getInputStream();) {
-                // file로 부터 inputStream을 가져온다.
-            
-            int readCount = 0;
-            byte[] buffer = new byte[1024];
-            // 파일을 읽을 크기 만큼의 buffer를 생성하고
-            // ( 보통 1024, 2048, 4096, 8192 와 같이 배수 형식으로 버퍼의 크기를 잡는 것이 일반적이다.)
-            
-            while ((readCount = is.read(buffer)) != -1) {
-                //  파일에서 가져온 fileInputStream을 설정한 크기 (1024byte) 만큼 읽고
-                
-                fos.write(buffer, 0, readCount);
-                // 위에서 생성한 fileOutputStream 객체에 출력하기를 반복한다
-            }
-        } catch (Exception ex) {
-            throw new RuntimeException("file Save Error");
-        }
-        
-        AttachDTO dto = new AttachDTO(originalFileName, storageName, fileType, filePath, fileSize, bookUid);        
-        AttachDAO dao = C.sqlSession.getMapper(AttachDAO.class);
+		// 이렇게 file의 get 메소드를 활용해 필요한 정보들을 가져오고
+		// 그걸 DTO에 담아 insert하면 된다.
+		// 간단한거니 후의 과정은 생략하고 파일로 서버에 저장하는 걸 보자면
+		try (FileOutputStream fos = new FileOutputStream(filePath + storageName);
+				// 파일 저장할 경로 + 파일명을 파라미터로 넣고 fileOutputStream 객체 생성하고
+				InputStream is = file.getInputStream();) {
+			// file로 부터 inputStream을 가져온다.
+
+			int readCount = 0;
+			byte[] buffer = new byte[1024];
+			// 파일을 읽을 크기 만큼의 buffer를 생성하고
+			// ( 보통 1024, 2048, 4096, 8192 와 같이 배수 형식으로 버퍼의 크기를 잡는 것이 일반적이다.)
+
+			while ((readCount = is.read(buffer)) != -1) {
+				// 파일에서 가져온 fileInputStream을 설정한 크기 (1024byte) 만큼 읽고
+
+				fos.write(buffer, 0, readCount);
+				// 위에서 생성한 fileOutputStream 객체에 출력하기를 반복한다
+			}
+		} catch (Exception ex) {
+			throw new RuntimeException("file Save Error");
+		}
+
+		AttachDTO dto = new AttachDTO(originalFileName, storageName, fileType, filePath, fileSize, bookUid);
+		AttachDAO dao = C.sqlSession.getMapper(AttachDAO.class);
 		dao.insert(dto);
-        
-        return "uploadok";
-		
+
+		return "uploadok";
+
 	}
 //	
 //	@RequestMapping("/insert.ajax")
@@ -137,40 +147,57 @@ public class ProductRestController {
 //		dao.insert(dto);
 //		
 //	}
-	
+
 	@RequestMapping("/update.ajax")
-	public void update(@RequestBody BookDTO dto) {	
-		
+	public void update(@RequestBody BookDTO dto) {
+
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		dao.update(dto);
 		System.out.println("업데이트 성공");
 	}
-	
+
 	@RequestMapping("/delete.ajax")
 	public void delete(@RequestBody BookDTO dto) {
-		
+
 		int bookUid = dto.getBookUid();
-		
+
+		AttachDAO aDao = C.sqlSession.getMapper(AttachDAO.class);
+		AttachDTO aDTO = aDao.selectByBookUid(bookUid);
+
+		if (aDTO != null) {
+			String filePath = aDTO.getUri() + aDTO.getSerName();
+			System.out.println(filePath);
+			File file = new File(filePath);
+
+			if (file.exists()) {
+				if (file.delete()) {
+					System.out.println("파일 삭제 성공!");
+				}
+			}
+
+		}
+
+		aDao.deleteByBookUid(bookUid);
+
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		dao.deleteByUid(bookUid);
-		
+
 	}
-	
+
 	@RequestMapping("/view.ajax")
 	public AjaxListResult<BookDTO> view(@RequestBody BookDTO dto) {
-		
+
 		int bookUid = dto.getBookUid();
-		
+
 		ProductDAO dao = C.sqlSession.getMapper(ProductDAO.class);
 		List<BookDTO> bookList = dao.selectByUid(bookUid);
-		
+
 		AjaxListResult<BookDTO> result = new AjaxListResult<>();
 		result.setData(bookList);
 		result.setCount(1);
-		
-		return result;		
-		
+
+		return result;
+
 	}
-	
 
 }

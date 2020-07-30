@@ -7,8 +7,8 @@ let app = new Vue({
     data: {
         posts: [],
         categories: [],
+        publishers: [],
         file: null,
-        category: '',
         url: '',
         subject: '',
         author: '',
@@ -27,6 +27,8 @@ let app = new Vue({
     created() {
         this.getList();
         this.getCategory();
+        this.getPublisher();
+
     },
     methods: {
         getList: function () {
@@ -69,11 +71,20 @@ let app = new Vue({
                 });
 
         },
-        cateChange: function(e){
-            console.log(e.target.dataset.parent);
-            console.log(e.target.value);
+        getPublisher: function(){  
+            console.log('출판사 가져오기 시작');     
+            axios.post(`http://localhost:8109/yes25_project/products/ajax/publisherList.ajax`
+                )
+                .then((result) => {
+                    console.log('출판사 가져오기 성공');
+                    console.log(result);
+                    console.log(result.data.data);
 
-
+                    this.publishers = result.data.data;
+                })
+                .catch(error => {
+                    console.log('출판사 가져오기 실패', error)
+                });
 
         },
         curPage: function (e) {
