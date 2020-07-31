@@ -8,7 +8,7 @@ let app = new Vue({
         posts: [],
         categories: [],
         publishers: [],
-        file: null,
+        file: '',
         url: '',
         subject: '',
         author: '',
@@ -49,6 +49,7 @@ let app = new Vue({
                     this.posts = result.data.data;
                     this.endPage = parseInt((this.count - 1) / this.pageRows) + 1;
                     console.log(this.endPage);
+                    this.clearForm();
                 })
                 .catch(error => {
                     console.log('리스트 가져오기 실패', error)
@@ -119,7 +120,7 @@ let app = new Vue({
             this.categoryUid = '';
             this.pubUid = '';
             this.url = '';
-            this.file = null;
+            this.file = '';
             this.$refs.myFileInput.value = '';
         },
         onFileChange(e) {
@@ -152,6 +153,25 @@ let app = new Vue({
             });
 
         },
+        imageUpdate(bookUid) {
+            let formData = new FormData();
+            formData.append('file', this.file);
+            formData.append('bookuid', bookUid);
+
+            axios.post('http://localhost:8109/yes25_project/products/ajax/imgupdate.ajax',
+                formData, {
+                    headers: {
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }).then(function () {
+                console.log('사진 업로드 성공!!');
+                // this.getList();
+
+            }).catch(function () {
+                console.log('사진 업로드 실패!!');
+            });
+
+        },
         submitForm: function () {
             console.log(this.category);
             axios.post(`http://localhost:8109/yes25_project/products/ajax/insert.ajax`, {
@@ -165,7 +185,7 @@ let app = new Vue({
                 .then((result) => {
                     console.log("폼 서밋 완료");
                     const bookUid = result.data;
-                    if (this.file != null) {
+                    if (this.file!='' && this.file!=null) {
                         this.imageUpload(bookUid);
                     }
                     setTimeout(() => {
@@ -221,17 +241,26 @@ let app = new Vue({
                     "content": this.content,
                     "categoryUid": this.categoryUid,
                     "pubUid": this.pubUid,
-
                 })
 
                 .then((result) => {
                     console.log(result);
-                    this.isEditable = false;
-                    this.getList();
+                    this.isEditable = false;                    
                 })
                 .catch(error => {
                     console.log('failed', error)
                 });
+
+                if(this.file!='' && this.file!=null){
+                    this.imageUpdate(this.bookUid);
+                }
+
+                setTimeout(() => {
+                    this.getList();
+                }, 100);
+
+                this.clearForm();
+                
         },
         deleteItem: function (event) {
             console.log(event.target.parentNode.parentNode.firstChild.innerText);

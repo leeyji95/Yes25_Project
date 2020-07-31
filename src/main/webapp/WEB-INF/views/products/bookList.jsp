@@ -89,7 +89,7 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <div class="card" style="height: 200px;" @dragover.prevent
-                                                @dragenter.prevent @drop.prevent="onDrop">
+                                                @dragenter.prevent @drop.prevent="onDrop" for="fileinput">
                                                 <img class="img-thumbnail mx-auto d-block" v-if="url" :src="url"
                                                     style="max-height: 100%;">
                                                 <div class="card-body">
@@ -116,7 +116,8 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <input type="file" @change="onFileChange" accept="image/*"
-                                                ref="myFileInput">
+                                                ref="myFileInput" id="fileinput" style="display: none;">
+                                            <label for="fileinput">사진 업로드</label>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
@@ -228,7 +229,8 @@
                                     <div class="row">
                                         <div class="col-4">
                                             <input type="file" @change="onFileChange" accept="image/*" ref="myFileInput"
-                                                :disabled="!isEditable">
+                                                :disabled="!isEditable" id="viewfile" style="display: none;">
+                                            <label for="viewfile">사진 업로드</label>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
