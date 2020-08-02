@@ -24,6 +24,61 @@
 	]]>
 </select>
 
+<select id="selectBySubject" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE SUBJECT LIKE '%'||#{param3}||'%')	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
+<select id="selectByContent" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE CONTENT LIKE '%'||#{param3}||'%')	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
+<select id="selectByAuthor" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE AUTHOR LIKE '%'||#{param3}||'%')	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
+<select id="selectByPublisher" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE PUBNAME LIKE '%'||#{param3}||'%')	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
+<select id="selectByCategory" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE CATEGORYNAME LIKE '%'||#{param3}||'%')	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
 <select id="selectByUid" resultType="com.lec.yes25.product.dto.BookDTO">
 	SELECT 
 		* 
@@ -38,6 +93,31 @@
 <select id="selectSearchCount" resultType="int">
 	SELECT count(*) FROM VIEW_BOOK 
 	WHERE SUBJECT LIKE '%'||#{param1}||'%' OR CONTENT LIKE '%'||#{param1}||'%' OR AUTHOR LIKE '%'||#{param1}||'%' OR PUBNAME LIKE '%'||#{param3}||'%'
+</select>
+
+<select id="selectSubjectCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE SUBJECT LIKE '%'||#{param1}||'%'
+</select>
+
+<select id="selectContentCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE CONTENT LIKE '%'||#{param1}||'%'
+</select>
+
+<select id="selectAuthorCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE AUTHOR LIKE '%'||#{param1}||'%'
+</select>
+
+<select id="selectPublisherCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE PUBNAME LIKE '%'||#{param1}||'%'
+</select>
+
+<select id="selectCategoryCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE CATEGORYNAME LIKE '%'||#{param1}||'%'
 </select>
 
 <insert id="insert" flushCache="true"

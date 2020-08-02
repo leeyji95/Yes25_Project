@@ -18,23 +18,36 @@
 
                 <div class="input-group mb-3">
                     <div class="form-group input-group-prepend">
-                        <select class="form-control">
-                            <option>제목</option>
-                            <option>내용</option>
-                            <option>저자</option>
-                            <option>출판사</option>
+                        <select v-model="searchOption" class="form-control">
+                            <option value=1>전체</option>
+                            <option value=2>제목</option>
+                            <option value=3>내용</option>
+                            <option value=4>저자</option>
+                            <option value=5>출판사</option>
+                            <option value=6>카테고리</option>
                         </select>
                     </div>
-                    <input :value="keyword" @input="keyword=$event.target.value" class="form-control" placeholder="검색어" @keyup.enter="getSearchList" >
+                    <input :value="keyword" @input="keyword=$event.target.value" class="form-control" placeholder="검색어"
+                        @keyup.enter="doSearch">
                     <div class="input-group-append">
-                        <button class="btn btn-success form-control" type="submit" @click="getSearchList">검색</button>
+                        <button class="btn btn-success form-control" type="submit" @click="doSearch">검색</button>
                     </div>
                 </div>
 
 
 
                 <p>총 {{count}}건</p>
-                <p><a href="#" @click.prevent="changeRows">10개씩 보기</a></p>
+                <div class="form-group row">
+                    <div class="col-2">
+                        <select v-model="pageRows" class="form-control" @change="getList">
+                            <option value=5>5개씩 보기</option>
+                            <option value=10>10개씩 보기</option>
+                            <option value=20>20개씩 보기</option>
+                            <option value=50>50개씩 보기</option>
+
+                        </select>
+                    </div>
+                </div>
 
                 <table class="table table-hover">
                     <tr v-for="post in posts" :key="post.bookUid">
@@ -44,17 +57,19 @@
                                 style="max-height: 100%;">
                         </td>
                         <td style="width: 50%;">
-                            <p>[{{post.categoryName}}] <a href="#" @click="viewItem" data-toggle="modal"
-                                    data-target="#viewModal">{{post.subject}}</a></p>
-                            <p>{{post.author}} / {{post.pubName}}</p>
-                            <p>{{post.price}}</p>
+                            <h4>[{{post.categoryName}}] <a class="text-dark font-weight-bold" href="#" @click="viewItem"
+                                    data-toggle="modal" data-target="#viewModal">{{post.subject}}</a></h4>
+                            <h5>{{post.author}} / {{post.pubName}}</h5>
+                            <br>
+                            <h4>정가: {{post.price | comma}}원</h4>
                         </td>
-                        <td style="width: 24.99%;"><a @click.prevent="deleteItem">삭제</a></td>
+                        <td style="width: 24.99%;"><a @click.prevent="deleteItem" class="text-danger">삭제</a></td>
                     </tr>
                 </table>
                 <div class="row">
                     <div class="col-10"></div>
                     <div class="col-2">
+                        <button class="btn btn-danger" @click="init">초기화면</button>
                         <button class="btn btn-primary" data-toggle="modal" data-target="#myModal">등록</button>
                     </div>
 
@@ -115,8 +130,8 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-4">
-                                            <input type="file" @change="onFileChange" accept="image/*"
-                                                ref="myFileInput" id="fileinput" style="display: none;">
+                                            <input type="file" @change="onFileChange" accept="image/*" ref="myFileInput"
+                                                id="fileinput" style="display: none;">
                                             <label for="fileinput">사진 업로드</label>
                                         </div>
                                         <div class="col-4">
@@ -136,11 +151,10 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="categoryUid">카테고리</label>
-                                                <v-autocomplete v-model="categoryUid" :items="categories" 
+                                                <v-autocomplete v-model="categoryUid" :items="categories"
                                                     :item-text="item => item.rootName + '/' + item.down1Name + '/' + item.down2Name"
-                                                    :debounce-search="0" item-value="down2Uid"
-                                                    clearable>
-                                                    
+                                                    :debounce-search="0" item-value="down2Uid" clearable>
+
                                                 </v-autocomplete>
 
                                             </div>
@@ -149,10 +163,8 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="pubUid">출판사</label>
-                                                <v-autocomplete v-model="pubUid" :items="publishers" 
-                                                    item-text="pubName"
-                                                    :debounce-search="0" item-value="pubUid"
-                                                    clearable>                                                    
+                                                <v-autocomplete v-model="pubUid" :items="publishers" item-text="pubName"
+                                                    :debounce-search="0" item-value="pubUid" clearable>
                                                 </v-autocomplete>
                                             </div>
                                         </div>
@@ -249,21 +261,20 @@
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="categoryUid">카테고리</label>
-                                                <v-autocomplete v-model="categoryUid" :items="categories" 
+                                                <v-autocomplete v-model="categoryUid" :items="categories"
                                                     :item-text="item => item.rootName + '/' + item.down1Name + '/' + item.down2Name"
-                                                    :debounce-search="0" item-value="down2Uid"
-                                                    clearable :disabled="!isEditable">
-                                                    
+                                                    :debounce-search="0" item-value="down2Uid" clearable
+                                                    :disabled="!isEditable">
+
                                                 </v-autocomplete>
                                             </div>
                                         </div>
                                         <div class="col-4">
                                             <div class="form-group">
                                                 <label for="pubUid">출판사</label>
-                                                <v-autocomplete v-model="pubUid" :items="publishers" 
-                                                    item-text="pubName"
-                                                    :debounce-search="0" item-value="pubUid"
-                                                    clearable :disabled="!isEditable">                                                    
+                                                <v-autocomplete v-model="pubUid" :items="publishers" item-text="pubName"
+                                                    :debounce-search="0" item-value="pubUid" clearable
+                                                    :disabled="!isEditable">
                                                 </v-autocomplete>
                                             </div>
                                         </div>

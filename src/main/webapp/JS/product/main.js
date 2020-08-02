@@ -25,7 +25,13 @@ let app = new Vue({
         isEditable: false,
         keyword: '',
         isSearch: false,
+        searchOption: 1,
     },
+    filters:{
+        comma(val){
+            return String(val).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+      },
     created() {
         this.getList();
         this.getCategory();
@@ -69,7 +75,9 @@ let app = new Vue({
             let formData = new FormData();
             formData.append('page', this.page);
             formData.append('pageRows', this.pageRows);
-            formData.append('keyword', this.keyword);            
+            formData.append('keyword', this.keyword);
+            formData.append('searchOption', this.searchOption);            
+
 
             axios.post(`http://localhost:8109/yes25_project/products/ajax/search.ajax`, formData
 
@@ -89,6 +97,10 @@ let app = new Vue({
                     console.log('검색결과 가져오기 실패', error)
                 });
 
+        },
+        doSearch: function(){
+            this.page = 1;
+            this.getSearchList();
         },
         getCategory: function(){  
             console.log('카테고리 가져오기 시작');     
@@ -139,8 +151,10 @@ let app = new Vue({
             this.page = this.startPage;
             this.getList();
         },
-        changeRows: function () {
-            this.pageRows = 10;
+        init: function () {
+            this.pageRows = 5;
+            this.isSearch = false;
+            this.page = 1;
             this.getList();
         },
         editMode: function(){

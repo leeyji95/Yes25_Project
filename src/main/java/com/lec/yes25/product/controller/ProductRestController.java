@@ -47,10 +47,11 @@ public class ProductRestController {
 	}
 	
 	@RequestMapping("/search.ajax")
-	public AjaxListResult<BookDTO> search(@RequestParam int page, @RequestParam int pageRows, @RequestParam String keyword) {
+	public AjaxListResult<BookDTO> search(@RequestParam int page, @RequestParam int pageRows, 
+			@RequestParam String keyword, @RequestParam int searchOption) {
 		
 		SearchService sService = new SearchService();
-		AjaxListResult<BookDTO> result = sService.execute(page, pageRows, keyword);
+		AjaxListResult<BookDTO> result = sService.execute(page, pageRows, keyword, searchOption);
 
 		return result;
 	}
