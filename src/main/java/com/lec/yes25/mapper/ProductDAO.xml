@@ -12,6 +12,18 @@
 	]]>
 </select>
 
+<select id="selectBySearch" resultType="com.lec.yes25.product.dto.BookDTO">
+	<![CDATA[
+	SELECT *
+	FROM 
+	(SELECT rownum AS rnum, vb.* 
+	FROM VIEW_BOOK vb
+	WHERE (SUBJECT LIKE '%'||#{param3}||'%' OR CONTENT LIKE '%'||#{param3}||'%' 
+	OR AUTHOR LIKE '%'||#{param3}||'%' OR PUBNAME LIKE '%'||#{param3}||'%'))	
+	WHERE RNUM >= 1 + (#{param1} - 1)*#{param2} AND RNUM < 1 + #{param1}*#{param2}
+	]]>
+</select>
+
 <select id="selectByUid" resultType="com.lec.yes25.product.dto.BookDTO">
 	SELECT 
 		* 
@@ -21,6 +33,11 @@
 
 <select id="selectCount" resultType="int">
 	SELECT count(*) FROM TB_BOOK
+</select>
+
+<select id="selectSearchCount" resultType="int">
+	SELECT count(*) FROM VIEW_BOOK 
+	WHERE SUBJECT LIKE '%'||#{param1}||'%' OR CONTENT LIKE '%'||#{param1}||'%' OR AUTHOR LIKE '%'||#{param1}||'%' OR PUBNAME LIKE '%'||#{param3}||'%'
 </select>
 
 <insert id="insert" flushCache="true"

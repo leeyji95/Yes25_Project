@@ -22,6 +22,7 @@ import com.lec.yes25.product.mapper.ProductDAO;
 import com.lec.yes25.product.mapper.PublisherDAO;
 import com.lec.yes25.product.service.FileDeleteService;
 import com.lec.yes25.product.service.ListService;
+import com.lec.yes25.product.service.SearchService;
 import com.lec.yes25.product.service.UploadService;
 
 @RestController
@@ -41,6 +42,15 @@ public class ProductRestController {
 		
 		ListService lService = new ListService();
 		AjaxListResult<BookDTO> result = lService.execute(page, pageRows);
+
+		return result;
+	}
+	
+	@RequestMapping("/search.ajax")
+	public AjaxListResult<BookDTO> search(@RequestParam int page, @RequestParam int pageRows, @RequestParam String keyword) {
+		
+		SearchService sService = new SearchService();
+		AjaxListResult<BookDTO> result = sService.execute(page, pageRows, keyword);
 
 		return result;
 	}

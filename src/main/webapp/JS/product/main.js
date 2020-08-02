@@ -23,6 +23,8 @@ let app = new Vue({
         startPage: 1,
         endPage: '',
         isEditable: false,
+        keyword: '',
+        isSearch: false,
     },
     created() {
         this.getList();
@@ -32,7 +34,11 @@ let app = new Vue({
     },
     methods: {
         getList: function () {
-            console.log(this.page);
+
+            if(this.isSearch){
+                this.getSearchList();
+            } else {
+            
             let formData = new FormData();
             formData.append('page', this.page);
             formData.append('pageRows', this.pageRows);
@@ -53,6 +59,34 @@ let app = new Vue({
                 })
                 .catch(error => {
                     console.log('리스트 가져오기 실패', error)
+                });
+            }
+
+        },
+        getSearchList: function () {
+            this.isSearch = true;
+            console.log(this.page);
+            let formData = new FormData();
+            formData.append('page', this.page);
+            formData.append('pageRows', this.pageRows);
+            formData.append('keyword', this.keyword);            
+
+            axios.post(`http://localhost:8109/yes25_project/products/ajax/search.ajax`, formData
+
+                )
+                .then((result) => {
+                    console.log('검색결과 가져오기 성공')
+                    console.log(result);
+                    console.log(result.data.data);
+
+                    this.count = result.data.count;
+                    this.posts = result.data.data;
+                    this.endPage = parseInt((this.count - 1) / this.pageRows) + 1;
+                    console.log(this.endPage);
+                    this.clearForm();
+                })
+                .catch(error => {
+                    console.log('검색결과 가져오기 실패', error)
                 });
 
         },

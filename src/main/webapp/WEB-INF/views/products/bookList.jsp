@@ -25,9 +25,9 @@
                             <option>출판사</option>
                         </select>
                     </div>
-                    <input type="text" class="form-control" placeholder="Search">
+                    <input :value="keyword" @input="keyword=$event.target.value" class="form-control" placeholder="검색어" @keyup.enter="getSearchList" >
                     <div class="input-group-append">
-                        <button class="btn btn-success form-control" type="submit">Go</button>
+                        <button class="btn btn-success form-control" type="submit" @click="getSearchList">검색</button>
                     </div>
                 </div>
 
